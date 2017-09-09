@@ -37,10 +37,46 @@
   height: 50px;
   border-radius: 50%;
   background: #2e7d32;
-  background-image: url("./add.svg");
+  background-image: url("./icons/add.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   font-size: 0;
+}
+
+.list-articles {
+  list-style: none;
+  padding: 0.3125em;
+  font-size: 1.25em;
+}
+.list-articles a {
+  /*color: blue;*/
+}
+.format-small {
+  font-size: 0.65em;
+  color: #888;
+}
+.format-small em {
+  color: #369;
+  font-style: normal;
+}
+.close-search {
+  display: block;
+  top: 20px;
+  left: 15px;
+  width: 50px;
+  height: 53px;
+  background: white;
+  background-image: url("./icons/arrow-back.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 28px;
+  font-size: 0;
+}
+.post {
+  font-size: 0.95em;
+}
+.post .posted-by {
+  font-size: 0.85em;
 }

@@ -1,0 +1,39 @@
+.container {
+	max-width: 80%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	article {
+		text-align: justify;
+	}
+	.commentContainer {
+		display: flex;
+		flex-direction: column;
+		.addComment {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 0.8em;
+			background: #fff;
+			border: 1px solid rgba(0, 0, 0, .09);
+			.avatar {
+				width: 5%;
+				img {
+					width: 3em;
+					height: 3em;
+				}
+			}
+			.comment {
+				display: flex;
+				width: 95%;
+				padding-left: 0.85em;
+				textarea {
+					width: 100%;
+					border: none;
+					font-family: sans-serif;
+					font-size: 0.85em;
+				}
+			}
+		}
+	}
+}
