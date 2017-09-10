@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { ADD_COMMENT } from '../actions';
 
 const initialState = {
 	'1504323052905': {
@@ -7,7 +8,7 @@ const initialState = {
 		timestamp: new Date().toString(),
 		score: 1,
 		author: 'Stan Lee',
-		comments: {}
+		comments: []
 	},
 	'1504323052908': {
 		title: 'The genius Iron Man',
@@ -15,7 +16,7 @@ const initialState = {
 		timestamp: new Date().toString(),
 		score: 1,
 		author: 'Stan Lee',
-		comments: {}
+		comments: []
 	},
 	'1504323052909': {
 		title: 'The incredible Hulk',
@@ -23,12 +24,20 @@ const initialState = {
 		timestamp: new Date().toString(),
 		score: 1,
 		author: 'Stan Lee',
-		comments: {}
+		comments: []
 	}
 };
 
 const home = (state = initialState, action) => {
-	return state;
+	switch (action.type) {
+		case ADD_COMMENT:
+			const { postId, comment } = action.payload;
+			let updatedPost = state[postId];
+			updatedPost.comments = [...updatedPost.comments, comment];
+			return { ...state, [postId]: updatedPost };
+		default:
+			return state;
+	}
 };
 
 const rootReducer = combineReducers({
