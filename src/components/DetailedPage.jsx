@@ -2,15 +2,48 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import BackIcon from "react-icons/lib/md/arrow-back";
-import avatarImage from "./ninja_avatar.png";
-import avatar_user1 from "./avatar_user_1.jpg";
+import moment from 'moment'
+import authorImage from "./author.png";
+import user1Image from "./user1.jpg";
+import user2Image from "./user2.png";
+import user3Image from "./user3.png";
+import user4Image from "./user4.png";
+import user5Image from "./user5.png";
+import user6Image from "./user6.png";
 import { addComment } from "../actions";
 import "../App.css";
 import "./DetailedPage.css";
 
 class DetailedPage extends Component {
 	state = {
-		comments: []
+		comments: [],
+		users: {
+			1: {
+				name: "Shelley",
+				avatar: user1Image
+			},
+			2: {
+				name: "Marc",
+				avatar: user2Image
+			},
+			3: {
+				name: "Mike",
+				avatar: user3Image
+			},
+			4: {
+				name: "Kyle",
+				avatar: user4Image
+			},
+			5: {
+				name: "Bob",
+				avatar: user5Image
+			},
+			6: {
+				name: "Jane",
+				avatar: user6Image
+			},
+
+		}
 	};
 	displayComments = comments => {
 		if (comments.length === 0) {
@@ -19,20 +52,28 @@ class DetailedPage extends Component {
 
 		return comments.map((comment, index) => {
 			return (
-				<li className="comment user-comment" key={index}>
-					<div className="info">
-						<a href="#">Anie Silverston</a>
-						<span>4 hours ago</span>
+				<li className="comment" key={index}>
+					<div className="info-avatar">
+						<a className="avatar" href="">
+							<img
+								src={comment.avatar}
+								width="35"
+								alt="Profile Avatar"
+								title={comment.name}
+							/>
+						</a>
+
+						<div className="info">
+							<a href="">{comment.author}</a>
+							<a href="" className="delete">Delete</a>
+							<a href="" className="edit">Edit</a>
+							<span>
+								{moment(comment.timestamp).fromNow()}
+							</span>
+						</div>
+						
 					</div>
-					<a className="avatar" href="#">
-						<img
-							src={avatar_user1}
-							width="35"
-							alt="Profile Avatar"
-							title="Anie Silverston"
-						/>
-					</a>
-					<p>{comment}</p>
+					<div style={{marginTop: "0.6em",lineHeight:"1.5em"}}>{comment.text}</div>
 				</li>
 			);
 		});
@@ -40,7 +81,14 @@ class DetailedPage extends Component {
 
 	addComment = () => {
 		const postId = this.props.match.params.id;
-		this.props.pushComment(postId, this.textInput.value);
+		const comment = {};
+		comment.text = this.textInput.value;
+		comment.timestamp = Date.now();
+		let randomId = Math.floor((Math.random() * 6) + 1);
+		let randomUser = this.state.users[randomId];
+		comment.author = randomUser.name;
+		comment.avatar = randomUser.avatar;
+		this.props.pushComment(postId, comment);
 		this.textInput.value = "";
 	};
 
@@ -79,7 +127,7 @@ class DetailedPage extends Component {
 						</section>
 						<section className="addComment">
 							<div className="avatar">
-								<img src={avatarImage} alt="avatar" />
+								<img src={authorImage} alt="avatar" />
 							</div>
 							<div className="comment">
 								<textarea
