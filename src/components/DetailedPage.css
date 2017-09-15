@@ -42,7 +42,7 @@
       padding: 0.85em; }
       .container .commentContainer .display-comment .comment-section .comment {
         display: flex;
-        border-radius: 0.20em;
+        border-radius: 0.2em;
         margin-bottom: 1em;
         flex-wrap: wrap;
         flex-direction: column;
@@ -55,7 +55,8 @@
             .container .commentContainer .display-comment .comment-section .comment .info-avatar .info span {
               font-size: 0.8em;
               display: block; }
-            .container .commentContainer .display-comment .comment-section .comment .info-avatar .info .edit, .container .commentContainer .display-comment .comment-section .comment .info-avatar .info .delete {
+            .container .commentContainer .display-comment .comment-section .comment .info-avatar .info .edit,
+            .container .commentContainer .display-comment .comment-section .comment .info-avatar .info .delete {
               display: inline;
               padding-left: 0.5em;
               font-size: 0.85em;
@@ -66,12 +67,28 @@
               float: right;
               display: block;
               border-radius: 50%; }
-        .container .commentContainer .display-comment .comment-section .comment P {
+        .container .commentContainer .display-comment .comment-section .comment p {
           line-height: 1.5;
           padding: 18px 22px;
           width: 50%;
           position: relative;
           word-wrap: break-word; }
+        .container .commentContainer .display-comment .comment-section .comment .edit-box {
+          display: flex;
+          flex-direction: column; }
+          .container .commentContainer .display-comment .comment-section .comment .edit-box textarea {
+            color: #444;
+            font: inherit;
+            outline: 0;
+            border-radius: 3px;
+            border: 1px solid #cecece;
+            background-color: #fefefe;
+            box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.06);
+            overflow: auto;
+            width: 98%;
+            min-height: 80px;
+            padding: 15px 10px;
+            padding-right: 0px; }
       .container .commentContainer .display-comment .comment-section .comment.user-comment {
         color: #808080; }
         .container .commentContainer .display-comment .comment-section .comment.user-comment p {
