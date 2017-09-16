@@ -32,7 +32,7 @@ const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
       const { comment } = action.payload;
-			const parentId = comment.parentId;
+      const parentId = comment.parentId;
       let updatedPost = state[parentId];
       updatedPost.comments = [...updatedPost.comments, comment];
       return { ...state, [parentId]: updatedPost };

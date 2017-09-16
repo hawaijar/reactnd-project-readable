@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BackIcon from 'react-icons/lib/md/arrow-back';
+import VoteUpIcon from 'react-icons/lib/md/arrow-drop-up';
+import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
 import moment from 'moment';
 import authorImage from './author.png';
 import user1Image from './user1.jpg';
@@ -10,7 +12,11 @@ import user3Image from './user3.png';
 import user4Image from './user4.png';
 import user5Image from './user5.png';
 import user6Image from './user6.png';
-import { addComment, editComment, deleteComment } from '../actions';
+import {
+  addComment,
+  editComment,
+  deleteComment,
+} from '../actions';
 import '../App.css';
 import './DetailedPage.css';
 
@@ -57,11 +63,15 @@ class DetailedPage extends Component {
     comment.author = randomUser.name;
     comment.avatar = randomUser.avatar;
     comment.parentId = parentId;
+    comment.parentDeleted = false;
+    comment.voteScore = 0;
+    comment.deleted = false;
     this.props.pushComment(comment);
     this.textInput.value = '';
   };
 
   onDelete = comment => {
+    comment.deleted = true;
     this.props.removeComment(comment);
   };
   onEdit = () => {
@@ -82,6 +92,14 @@ class DetailedPage extends Component {
       isEdit: false
     });
   };
+  onVoteScoreUp = comment => {
+    comment.voteScore += 1;
+    this.props.updateComment(comment);
+  }
+  onVoteScoreDown = comment => {
+    comment.voteScore -= 1;
+    this.props.updateComment(comment);
+  }
   displayComments = (comments, updateComment) => {
     if (comments.length === 0) {
       return null;
@@ -129,7 +147,16 @@ class DetailedPage extends Component {
               </div>
             </div>
             <div style={{ marginTop: '0.6em', lineHeight: '1.5em' }}>
-              {!this.state.isEdit && comment.text}
+              {!this.state.isEdit && (
+                <div className="comment-vote">
+                  <span>{comment.text}</span>
+                  <div>
+                    <VoteUpIcon onClick = {()=> this.onVoteScoreUp(comment)} width={50} height={50} />
+                    <span>{`(${comment.voteScore})`}</span>
+                    <VoteDownIcon onClick = {()=> this.onVoteScoreDown(comment)} width={50} height={50} />
+                  </div>
+                </div>
+              )}
               {this.state.isEdit && (
                 <div className="edit-box">
                   <div className="first-box">

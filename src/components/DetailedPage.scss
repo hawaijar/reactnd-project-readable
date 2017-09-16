@@ -55,6 +55,29 @@
           flex-direction: column;
           border: 1px solid rgba(0, 0, 0, 0.2);
           padding: 0.5em;
+          .comment-vote {
+            display: flex;
+            flex-direction: column;
+            div {
+              align-self: flex-end;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: center;
+              svg {
+                padding: 0 0.5em;
+                color: 'blue';
+                text-decoration: underline;
+                cursor: pointer;
+              }
+              span {
+                text-transform: uppercase;
+                margin-top: -0.2em;
+                color: #666;
+                font-size: 1.5em;
+              }
+            }
+          }
           .info-avatar {
             display: flex;
             .info {

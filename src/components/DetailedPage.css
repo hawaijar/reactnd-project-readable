@@ -48,6 +48,25 @@
         flex-direction: column;
         border: 1px solid rgba(0, 0, 0, 0.2);
         padding: 0.5em; }
+        .container .commentContainer .display-comment .comment-section .comment .comment-vote {
+          display: flex;
+          flex-direction: column; }
+          .container .commentContainer .display-comment .comment-section .comment .comment-vote div {
+            align-self: flex-end;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center; }
+            .container .commentContainer .display-comment .comment-section .comment .comment-vote div svg {
+              padding: 0 0.5em;
+              color: 'blue';
+              text-decoration: underline;
+              cursor: pointer; }
+            .container .commentContainer .display-comment .comment-section .comment .comment-vote div span {
+              text-transform: uppercase;
+              margin-top: -0.2em;
+              color: #666;
+              font-size: 1.5em; }
         .container .commentContainer .display-comment .comment-section .comment .info-avatar {
           display: flex; }
           .container .commentContainer .display-comment .comment-section .comment .info-avatar .info {
