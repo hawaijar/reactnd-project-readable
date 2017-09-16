@@ -59,7 +59,7 @@
             align-items: center; }
             .container .commentContainer .display-comment .comment-section .comment .comment-vote div svg {
               padding: 0 0.5em;
-              color: 'blue';
+              color: blue;
               text-decoration: underline;
               cursor: pointer; }
             .container .commentContainer .display-comment .comment-section .comment .comment-vote div span {

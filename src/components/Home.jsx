@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Post from './Post';
 
 class HomeCategory extends Component {
 	createArticles = posts => {
 		return Object.keys(posts).map(id => {
-			const epoch = parseInt(id, 10);
 			return (
 				<li key={id}>
-					<h3>
-						<Link to={{ pathname: `/post/${id}`, category: 'Home' }}>
-							{posts[id].title}
-						</Link>
-					</h3>
-					<div className="format-small">
-						<span>
-							Submitted on {new Date(epoch).toString()} by <em>{posts[id].author}</em>
-						</span>
-					</div>
+					<Post
+						title={posts[id].title}
+						author={posts[id].author}
+						id={id}
+						onEdit={this.onEdit}
+						onDelete={this.onDelete} />
 				</li>
 			);
 		});
 	};
+	onEdit = () => {};
+	onDelete = () => {};
 	render() {
 		return (
 			<div className="post">
