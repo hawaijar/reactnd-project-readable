@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_COMMENT } from '../actions';
-import { EDIT_COMMENT } from '../actions';
+import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from '../actions';
 
 const initialState = {
   '1504323052905': {
@@ -32,19 +31,30 @@ const initialState = {
 const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
-      const { postId, comment } = action.payload;
-      let updatedPost = state[postId];
+      const { comment } = action.payload;
+			const parentId = comment.parentId;
+      let updatedPost = state[parentId];
       updatedPost.comments = [...updatedPost.comments, comment];
-      return { ...state, [postId]: updatedPost };
+      return { ...state, [parentId]: updatedPost };
     }
     case EDIT_COMMENT: {
-      const { comment, postId } = action.payload;
-      let updatedPost = state[postId];
+      const { comment } = action.payload;
+      const parentId = comment.parentId;
+      let updatedPost = state[parentId];
       updatedPost.comments = updatedPost.comments.filter(
         eachComment => comment.id !== eachComment.id
       );
       updatedPost.comments = [...updatedPost.comments, comment];
-      return { ...state, [postId]: updatedPost };
+      return { ...state, [parentId]: updatedPost };
+    }
+    case DELETE_COMMENT: {
+      const { comment } = action.payload;
+      const parentId = comment.parentId;
+      let updatedPost = state[parentId];
+      updatedPost.comments = updatedPost.comments.filter(
+        eachComment => comment.id !== eachComment.id
+      );
+      return { ...state, [parentId]: updatedPost };
     }
     default:
       return state;

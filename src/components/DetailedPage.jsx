@@ -10,8 +10,7 @@ import user3Image from './user3.png';
 import user4Image from './user4.png';
 import user5Image from './user5.png';
 import user6Image from './user6.png';
-import { addComment } from '../actions';
-import { editComment } from '../actions';
+import { addComment, editComment, deleteComment } from '../actions';
 import '../App.css';
 import './DetailedPage.css';
 
@@ -47,23 +46,41 @@ class DetailedPage extends Component {
     isEdit: false,
     temp: ''
   };
+  addComment = () => {
+    const parentId = this.props.match.params.id;
+    const comment = {};
+    comment.text = this.textInput.value;
+    comment.timestamp = Date.now();
+    let randomId = Math.floor(Math.random() * 6 + 1);
+    let randomUser = this.state.users[randomId];
+    comment.id = new Date().getTime().toString();
+    comment.author = randomUser.name;
+    comment.avatar = randomUser.avatar;
+    comment.parentId = parentId;
+    this.props.pushComment(comment);
+    this.textInput.value = '';
+  };
+
+  onDelete = comment => {
+    this.props.removeComment(comment);
+  };
   onEdit = () => {
-      this.setState({
+    this.setState({
       isEdit: true
-    })
+    });
   };
   onCancel = () => {
-      this.setState({
+    this.setState({
       isEdit: false
-    })
+    });
   };
   onSave = comment => {
     comment.text = this.refs.textInput.value;
     this.refs.textInput.value = '';
-    this.props.updateComment(comment.postId, comment);
+    this.props.updateComment(comment);
     this.setState({
       isEdit: false
-    })
+    });
   };
   displayComments = (comments, updateComment) => {
     if (comments.length === 0) {
@@ -86,9 +103,17 @@ class DetailedPage extends Component {
 
               <div className="info">
                 <a href="">{comment.author}</a>
-                <a href="" className="delete">
+                <span
+                  className="delete"
+                  onClick={() => this.onDelete(comment)}
+                  style={{
+                    color: 'blue',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
                   Delete
-                </a>
+                </span>
                 <span
                   className="edit"
                   onClick={this.onEdit}
@@ -105,14 +130,15 @@ class DetailedPage extends Component {
             </div>
             <div style={{ marginTop: '0.6em', lineHeight: '1.5em' }}>
               {!this.state.isEdit && comment.text}
-              { this.state.isEdit &&  <div className="edit-box">
+              {this.state.isEdit && (
+                <div className="edit-box">
                   <div className="first-box">
                     <textarea
                       placeholder="Add your comment here"
                       name="comment"
                       ref="textInput"
                       autoFocus
-                      defaultValue = {comment.text}
+                      defaultValue={comment.text}
                     />
                   </div>
                   <div className="second-box">
@@ -120,28 +146,12 @@ class DetailedPage extends Component {
                     <button onClick={this.onCancel}>Cancel</button>
                   </div>
                 </div>
-              }
+              )}
             </div>
           </div>
-
         </li>
       );
     });
-  };
-
-  addComment = () => {
-    const postId = this.props.match.params.id;
-    const comment = {};
-    comment.text = this.textInput.value;
-    comment.timestamp = Date.now();
-    let randomId = Math.floor(Math.random() * 6 + 1);
-    let randomUser = this.state.users[randomId];
-    comment.id = new Date().getTime().toString();
-    comment.author = randomUser.name;
-    comment.avatar = randomUser.avatar;
-    comment.postId = postId;
-    this.props.pushComment(postId, comment);
-    this.textInput.value = '';
   };
 
   render() {
@@ -210,11 +220,14 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToActions(dispatch) {
   return {
-    pushComment(postId, comment) {
-      dispatch(addComment(postId, comment));
+    pushComment(comment) {
+      dispatch(addComment(comment));
     },
-    updateComment(postId, comment) {
-      dispatch(editComment(postId, comment));
+    updateComment(comment) {
+      dispatch(editComment(comment));
+    },
+    removeComment(comment) {
+      dispatch(deleteComment(comment));
     }
   };
 }
