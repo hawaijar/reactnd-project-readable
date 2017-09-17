@@ -2,3 +2,11 @@
   margin: 0 auto;
   width: 98%;
 }
+.post-form {
+  margin-top: -2em;
+  form {
+    width: 50em;
+    display: flex;
+    flex-direction: column;
+  }
+}
