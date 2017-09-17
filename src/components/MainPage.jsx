@@ -2,8 +2,7 @@ import React from 'react';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 import HomeCategory from './Home';
-import ReactCategory from './React';
-import UdacityCategory from './Udacity';
+import Category from './Category';
 import './MainPage.css';
 
 const MainPage = () => (
@@ -13,10 +12,10 @@ const MainPage = () => (
         <HomeCategory />
       </Tab>
       <Tab eventKey={2} title="React">
-        <ReactCategory />
+        <Category category="React"/>
       </Tab>
       <Tab eventKey={3} title="Udacity">
-        <UdacityCategory />
+        <Category category="Udacity" />
       </Tab>
     </Tabs>
     <div className="open-search">
