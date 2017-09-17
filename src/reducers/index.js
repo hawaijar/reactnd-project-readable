@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from '../actions';
+import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST } from '../actions';
 
 const initialState = {
   '1504323052905': {
@@ -8,6 +8,7 @@ const initialState = {
     timestamp: new Date().toString(),
     score: 1,
     author: 'Stan Lee',
+    editFlag: true,
     comments: []
   },
   '1504323052908': {
@@ -55,6 +56,12 @@ const home = (state = initialState, action) => {
         eachComment => comment.id !== eachComment.id
       );
       return { ...state, [parentId]: updatedPost };
+    }
+    case EDIT_POST: {
+      const { postId, body } = action.payload;
+      let updatedPost = state[postId];
+      updatedPost.body = body;
+      return { ...state, [postId]: updatedPost };
     }
     default:
       return state;

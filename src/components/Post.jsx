@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Post.css'
+import './Post.css';
 
 const Post = ({ id, title, time, author, onEdit, onDelete }) => {
   return (
     <div>
       <div className="format-big">
         <h3>
-          <Link to={{ pathname: `/post/${id}`, category: 'Home' }}>
+          <Link to={{pathname: `/post/${id}`, state: null }}>
             {title}
           </Link>
         </h3>
-        <span>Edit</span>
+        <span>
+          <Link to={{pathname: `/post/${id}`, state: {isEdit: true} }}>Edit</Link>
+        </span>
         <span>Delete</span>
       </div>
 

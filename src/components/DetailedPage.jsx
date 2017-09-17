@@ -9,12 +9,8 @@ import user3Image from './user3.png';
 import user4Image from './user4.png';
 import user5Image from './user5.png';
 import user6Image from './user6.png';
-import {
-  addComment,
-  editComment,
-  deleteComment,
-} from '../actions';
-import Comment from './Comment'
+import { addComment, editPost } from '../actions';
+import Comment from './Comment';
 import '../App.css';
 import './DetailedPage.css';
 
@@ -47,8 +43,7 @@ class DetailedPage extends Component {
         avatar: user6Image
       }
     },
-    isEdit: false,
-    temp: ''
+    isEdit: false
   };
   addComment = () => {
     const parentId = this.props.match.params.id;
@@ -68,6 +63,12 @@ class DetailedPage extends Component {
     this.textInput.value = '';
   };
 
+  onEdit = postId => {
+    const body = this.refs.textInput.value;
+    this.setState({ isEdit: false });
+    this.props.updatePost(postId, body);
+  };
+
   displayComments = (comments, updateComment) => {
     if (comments.length === 0) {
       return null;
@@ -82,9 +83,14 @@ class DetailedPage extends Component {
   };
 
   render() {
-    const { title, author, body } = this.props.post;
-    const { comments, updateComment } = this.props;
-    //console.log(comments)
+    const {
+      title,
+      author,
+      body,
+      comments,
+      updateComment,
+    } = this.props;
+    const postId = this.props.match.params.id;
     return (
       <div>
         <div>
@@ -94,9 +100,47 @@ class DetailedPage extends Component {
         </div>
         <div className="container">
           <article className="post">
-            <h1>{title}</h1>
+            <h1>
+              {title}
+              <span>
+                <Link
+                  to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}
+                >
+                  Edit
+                </Link>
+              </span>
+            </h1>
             <p className="posted-by">Posted by {author}</p>
-            {body}
+            {!this.props.location.state && body}
+            {this.props.location.state && (
+              <div className="edit-post">
+                <div className="first-box">
+                  <textarea
+                    name="comment"
+                    ref="textInput"
+                    autoFocus
+                    defaultValue={body}
+                  />
+                </div>
+                <div className="second-box">
+                  <span>
+                      <Link
+                        onClick={() => this.onEdit(postId)}
+                        to={{ pathname: `/post/${postId}`, state: null }}
+                      >
+                        Save
+                      </Link>
+                  </span>
+                  <span>
+                    <Link
+                      to={{ pathname: `/post/${postId}`, state: null }}
+                    >
+                      Cancel
+                    </Link>
+                  </span>
+                </div>
+              </div>
+            )}
           </article>
           <hr />
           <section className="commentContainer">
@@ -140,8 +184,10 @@ class DetailedPage extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    post: state.home[ownProps.match.params.id],
-    comments: state.home[ownProps.match.params.id].comments
+    title: state.home[ownProps.match.params.id].title,
+    author: state.home[ownProps.match.params.id].author,
+    body: state.home[ownProps.match.params.id].body,
+    comments: state.home[ownProps.match.params.id].comments,
   };
 }
 
@@ -150,11 +196,8 @@ function mapDispatchToActions(dispatch) {
     pushComment(comment) {
       dispatch(addComment(comment));
     },
-    updateComment(comment) {
-      dispatch(editComment(comment));
-    },
-    removeComment(comment) {
-      dispatch(deleteComment(comment));
+    updatePost(postId, body) {
+      dispatch(editPost(postId, body));
     }
   };
 }

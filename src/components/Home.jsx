@@ -17,7 +17,9 @@ class HomeCategory extends Component {
 			);
 		});
 	};
-	onEdit = () => {};
+	onEdit = (id) => {
+
+	};
 	onDelete = () => {};
 	render() {
 		return (

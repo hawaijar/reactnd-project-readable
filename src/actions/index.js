@@ -23,3 +23,9 @@ export function deleteComment(comment) {
     payload: { comment }
   };
 }
+export function editPost(postId, body) {
+  return {
+    type: EDIT_POST,
+    payload: { postId, body }
+  };
+}
