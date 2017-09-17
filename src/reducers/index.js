@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST } from '../actions';
+import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST } from '../actions';
 
 const initialState = {
   '1504323052905': {
@@ -9,7 +9,9 @@ const initialState = {
     score: 1,
     author: 'Stan Lee',
     editFlag: true,
-    comments: []
+    comments: [],
+    deleted: false,
+    category: "React"
   },
   '1504323052908': {
     title: 'The genius Iron Man',
@@ -17,7 +19,9 @@ const initialState = {
     timestamp: new Date().toString(),
     score: 1,
     author: 'Stan Lee',
-    comments: []
+    comments: [],
+    deleted: false,
+    category: "Udacity"
   },
   '1504323052909': {
     title: 'The incredible Hulk',
@@ -25,7 +29,9 @@ const initialState = {
     timestamp: new Date().toString(),
     score: 1,
     author: 'Stan Lee',
-    comments: []
+    comments: [],
+    deleted: false,
+    category:"React"
   }
 };
 
@@ -61,6 +67,12 @@ const home = (state = initialState, action) => {
       const { postId, body } = action.payload;
       let updatedPost = state[postId];
       updatedPost.body = body;
+      return { ...state, [postId]: updatedPost };
+    }
+    case DELETE_POST: {
+      const { postId} = action.payload;
+      let updatedPost = state[postId];
+      updatedPost.deleted = true;
       return { ...state, [postId]: updatedPost };
     }
     default:

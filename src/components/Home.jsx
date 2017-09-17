@@ -6,7 +6,7 @@ class HomeCategory extends Component {
 	createArticles = posts => {
 		return Object.keys(posts).map(id => {
 			return (
-				<li key={id}>
+				!posts[id].deleted && <li key={id}>
 					<Post
 						title={posts[id].title}
 						author={posts[id].author}

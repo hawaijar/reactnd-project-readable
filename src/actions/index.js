@@ -29,3 +29,9 @@ export function editPost(postId, body) {
     payload: { postId, body }
   };
 }
+export function deletePost(postId) {
+  return {
+    type: DELETE_POST,
+    payload: { postId}
+  };
+}
