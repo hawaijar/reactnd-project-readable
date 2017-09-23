@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Post from './Post';
+import orderBy from 'lodash/orderBy';
 
 class HomeCategory extends Component {
 	createArticles = posts => {
+		posts = orderBy(posts, ['voteScore'], ['desc']);
 		return Object.keys(posts).map(id => {
 			return (
-				!posts[id].deleted && <li key={id}>
+				!posts[id].deleted &&
+				<li key={id}>
 					<Post
 						title={posts[id].title}
 						author={posts[id].author}
 						id={id}
 						onEdit={this.onEdit}
-						onDelete={this.onDelete} />
+						onDelete={this.onDelete}
+						voteScore={posts[id].voteScore}
+					/>
 				</li>
 			);
 		});
 	};
-	onEdit = (id) => {
-
-	};
+	onEdit = id => {};
 	onDelete = () => {};
 	render() {
 		return (

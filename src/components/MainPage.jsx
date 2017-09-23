@@ -57,22 +57,22 @@ class MainPage extends Component {
     e.preventDefault();
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     let post = {
       id: uuid(),
       title: this.title.value,
       body: this.body.value,
       timestamp: new Date().toString(),
-      score: 1,
+          score: 1,
       author: 'Stan Lee',
       comments: [],
       deleted: false,
       category: this.category.value
-    }
+    };
     this.props.newPost(post);
     this.setState({ modalIsOpen: false });
-  }
+  };
 
   render() {
     return (
@@ -93,43 +93,48 @@ class MainPage extends Component {
                   type="text"
                   label="Title"
                   placeholder="Enter title"
-                  inputRef={ref => {this.title=ref}}
+                  inputRef={ref => {
+                    this.title = ref;
+                  }}
                 />
                 <FormGroup controlId="formControlsTextarea">
                   <ControlLabel>Textarea</ControlLabel>
                   <FormControl
                     componentClass="textarea"
                     placeholder="Enter body"
-                    inputRef={ref => {this.body=ref}}
+                    inputRef={ref => {
+                      this.body = ref;
+                    }}
                   />
                 </FormGroup>
                 <ControlLabel>Category</ControlLabel>
                 <FormControl
                   componentClass="select"
-                  inputRef={ref => {this.category=ref}}
-                  placeholder="select">
+                  inputRef={ref => {
+                    this.category = ref;
+                  }}
+                  placeholder="select"
+                >
                   <option value="select">select</option>
                   <option value="React">React</option>
                   <option value="Udacity">Udacity</option>
                 </FormControl>
                 <div
-                style={
-                  {
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    marginTop: "0.5em"
-                  }
-                }>
-                  <Button
-                    type="submit"
-                    bsStyle="primary">
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    marginTop: '0.5em'
+                  }}
+                >
+                  <Button type="submit" bsStyle="primary">
                     Create
                   </Button>
                   <Button
                     onClick={this.closeModal}
-                    style={{marginLeft: "0.30em"}}
-                    bsStyle="primary">
+                    style={{ marginLeft: '0.30em' }}
+                    bsStyle="primary"
+                  >
                     Cancel
                   </Button>
                 </div>
