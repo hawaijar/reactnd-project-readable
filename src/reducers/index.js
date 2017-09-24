@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST } from '../actions';
 
 const initialState = {
-  '1504323052905': {
+  '1904323052905': {
     title: 'The amazing Spiderman',
     body: `The Amazing Spider-Man is a 2012 American superhero 
     film based on the Marvel Comics character Spider-Man, and sharing the title of the character's 
@@ -12,7 +12,7 @@ const initialState = {
     New York who becomes Spider-Man after being bitten by a genetically altered spider. 
     Parker must stop Dr. Curt Connors as a mutated lizard, from spreading a mutation serum 
     to the city's human population.`,
-    timestamp: new Date().toString(),
+    timeStamp: 1506230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -34,7 +34,7 @@ const initialState = {
       Cold War themes, particularly the role of American technology and business in the fight against 
     communism.[1] Subsequent re-imaginings of Iron Man have transitioned from Cold War themes to contemporary 
     concerns, such as corporate crime and terrorism`,
-    timestamp: new Date().toString(),
+    timeStamp: 1509230663911,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -42,7 +42,7 @@ const initialState = {
     category: 'Udacity',
     voteScore: 20
   },
-  '1504323052909': {
+  '1594329055909': {
     title: 'The incredible Hulk',
     body: `The Hulk is a fictional superhero appearing in American comic books published by Marvel Comics. 
     Created by writer Stan Lee and artist Jack Kirby, the character first appeared in the debut issue of The 
@@ -50,7 +50,7 @@ const initialState = {
     hulking and muscular humanoid possessing a vast degree of physical strength, and his alter ego Bruce Banner, 
     a physically weak, socially withdrawn, and emotionally reserved physicist, the two existing as personalities 
     independent and resenting of the other.`,
-    timestamp: new Date().toString(),
+    timeStamp: 1556230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],

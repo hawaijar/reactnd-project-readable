@@ -2,14 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import orderBy from 'lodash/orderBy';
 import Post from './Post';
+import Modal from './ModalForm';
+
+function toCapitalize(str) {
+	if (typeof str === 'string') {
+		const lowercase = str.toLowerCase();
+		return `${lowercase.charAt(0).toUpperCase()}${str.slice(1)}`;
+	}
+	return null;
+}
 
 class Category extends Component {
+	state = {
+		modalIsOpen: false
+	};
+	hasMatchedCategory = (c, category) => {
+		return c.toLowerCase() === category.toLowerCase();
+	};
 	createArticles = (posts, category) => {
 		posts = orderBy(posts, ['voteScore'], ['desc']);
+		//const condition = (category === 'home')?true:
 		return Object.keys(posts).map(id => {
 			return (
 				!posts[id].deleted &&
-				posts[id].category === category &&
+				(category.toLowerCase() === 'home' ? true : this.hasMatchedCategory(posts[id].category, category)) &&
 				<li key={id}>
 					<Post
 						title={posts[id].title}
@@ -25,14 +41,34 @@ class Category extends Component {
 	};
 	onEdit = id => {};
 	onDelete = () => {};
+	onModalOpen = e => {
+		e.preventDefault();
+		this.setState({ modalIsOpen: true });
+	};
+	onModalClose = e => {
+		e.preventDefault();
+		this.setState({ modalIsOpen: true });
+	};
 	render() {
 		const { category } = this.props;
 		return (
-			<div className="post">
-				<h2>Recent Posts</h2>
-				<ul className="list-articles">
-					{this.createArticles(this.props.data, category)}
-				</ul>
+			<div>
+				<div className="post">
+					<Modal
+						modalIsOpen={this.state.modalIsOpen}
+						onModalClose={this.onModalClose}
+						onModalOpen={this.onModalOpen}
+					/>
+					<h2>Recent Posts</h2>
+					<ul className="list-articles">
+						{this.createArticles(this.props.data, category)}
+					</ul>
+				</div>
+				<div onClick={this.openModal} className="open-search">
+					<a onClick={this.onOpen} href="/">
+						New
+					</a>
+				</div>
 			</div>
 		);
 	}

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BackIcon from 'react-icons/lib/md/arrow-back';
-import authorImage from './author.png';
-import user1Image from './user1.jpg';
-import user2Image from './user2.png';
-import user3Image from './user3.png';
-import user4Image from './user4.png';
-import user5Image from './user5.png';
-import user6Image from './user6.png';
+import authorImage from '../icons/author.png';
+import user1Image from '../icons/user1.jpg';
+import user2Image from '../icons/user2.png';
+import user3Image from '../icons/user3.png';
+import user4Image from '../icons/user4.png';
+import user5Image from '../icons/user5.png';
+import user6Image from '../icons/user6.png';
 import { addComment, editPost } from '../actions';
 import Comment from './Comment';
 import '../App.css';
@@ -83,13 +83,7 @@ class DetailedPage extends Component {
   };
 
   render() {
-    const {
-      title,
-      author,
-      body,
-      comments,
-      updateComment,
-    } = this.props;
+    const { title, author, body, comments, updateComment } = this.props;
     const postId = this.props.match.params.id;
     return (
       <div>
@@ -103,44 +97,29 @@ class DetailedPage extends Component {
             <h1>
               {title}
               <span>
-                <Link
-                  to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}
-                >
-                  Edit
-                </Link>
+                <Link to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}>Edit</Link>
               </span>
             </h1>
-            <p className="posted-by">Posted by {author}</p>
+            <p className="posted-by">
+              Posted by {author}
+            </p>
             {!this.props.location.state && body}
-            {this.props.location.state && (
+            {this.props.location.state &&
               <div className="edit-post">
                 <div className="first-box">
-                  <textarea
-                    name="comment"
-                    ref="textInput"
-                    autoFocus
-                    defaultValue={body}
-                  />
+                  <textarea name="comment" ref="textInput" autoFocus defaultValue={body} />
                 </div>
                 <div className="second-box">
                   <span>
-                      <Link
-                        onClick={() => this.onEdit(postId)}
-                        to={{ pathname: `/post/${postId}`, state: null }}
-                      >
-                        Save
-                      </Link>
-                  </span>
-                  <span>
-                    <Link
-                      to={{ pathname: `/post/${postId}`, state: null }}
-                    >
-                      Cancel
+                    <Link onClick={() => this.onEdit(postId)} to={{ pathname: `/post/${postId}`, state: null }}>
+                      Save
                     </Link>
                   </span>
+                  <span>
+                    <Link to={{ pathname: `/post/${postId}`, state: null }}>Cancel</Link>
+                  </span>
                 </div>
-              </div>
-            )}
+              </div>}
           </article>
           <hr />
           <section className="commentContainer">
@@ -187,7 +166,7 @@ function mapStateToProps(state, ownProps) {
     title: state.home[ownProps.match.params.id].title,
     author: state.home[ownProps.match.params.id].author,
     body: state.home[ownProps.match.params.id].body,
-    comments: state.home[ownProps.match.params.id].comments,
+    comments: state.home[ownProps.match.params.id].comments
   };
 }
 
