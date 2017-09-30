@@ -31,7 +31,6 @@ class Category extends Component {
 						title={post.title}
 						author={post.author}
 						id={post.id}
-						onEdit={this.onEdit}
 						onDelete={this.onDelete}
 						voteScore={post.voteScore}
 					/>
@@ -39,7 +38,6 @@ class Category extends Component {
 			);
 		});
 	};
-	onEdit = id => {};
 	onDelete = () => {};
 	onModalOpen = e => {
 		e.preventDefault();

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import find from 'lodash/find';
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST } from '../actions';
 
 const initialState = [
@@ -95,7 +96,7 @@ const home = (state = initialState, action) => {
     }
     case DELETE_POST: {
       const { postId } = action.payload;
-      let updatedPost = state[postId];
+      const updatedPost = find(state, { id: postId });
       updatedPost.deleted = true;
       return { ...state, [postId]: updatedPost };
     }
