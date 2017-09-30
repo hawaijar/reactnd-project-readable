@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST } from '../actions';
 
-const initialState = {
-  '1904323052905': {
+const initialState = [
+  {
+    id: '1904323052905',
     title: 'The amazing Spiderman',
     body: `The Amazing Spider-Man is a 2012 American superhero 
     film based on the Marvel Comics character Spider-Man, and sharing the title of the character's 
@@ -20,7 +21,8 @@ const initialState = {
     category: 'React',
     voteScore: 10
   },
-  '1504323052908': {
+  {
+    id: '1504323052908',
     title: 'The genius Iron Man',
     body: `Iron Man is a fictional superhero appearing in American comic books published by Marvel Comics. 
     The character was created by writer and editor Stan Lee, developed by scripter Larry Lieber, and 
@@ -42,7 +44,8 @@ const initialState = {
     category: 'Udacity',
     voteScore: 20
   },
-  '1594329055909': {
+  {
+    id: '1594329055909',
     title: 'The incredible Hulk',
     body: `The Hulk is a fictional superhero appearing in American comic books published by Marvel Comics. 
     Created by writer Stan Lee and artist Jack Kirby, the character first appeared in the debut issue of The 
@@ -58,7 +61,7 @@ const initialState = {
     category: 'React',
     voteScore: 5
   }
-};
+];
 
 const home = (state = initialState, action) => {
   switch (action.type) {

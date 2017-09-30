@@ -22,18 +22,18 @@ class Category extends Component {
 	createArticles = (posts, category) => {
 		posts = orderBy(posts, ['voteScore'], ['desc']);
 		//const condition = (category === 'home')?true:
-		return Object.keys(posts).map(id => {
+		return posts.map(post => {
 			return (
-				!posts[id].deleted &&
-				(category.toLowerCase() === 'home' ? true : this.hasMatchedCategory(posts[id].category, category)) &&
-				<li key={id}>
+				!post.deleted &&
+				(category.toLowerCase() === 'home' ? true : this.hasMatchedCategory(post.category, category)) &&
+				<li key={post.id}>
 					<Post
-						title={posts[id].title}
-						author={posts[id].author}
-						id={id}
+						title={post.title}
+						author={post.author}
+						id={post.id}
 						onEdit={this.onEdit}
 						onDelete={this.onDelete}
-						voteScore={posts[id].voteScore}
+						voteScore={post.voteScore}
 					/>
 				</li>
 			);

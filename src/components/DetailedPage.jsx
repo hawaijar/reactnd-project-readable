@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import find from 'lodash/find';
 import BackIcon from 'react-icons/lib/md/arrow-back';
 import authorImage from '../icons/author.png';
 import user1Image from '../icons/user1.jpg';
@@ -162,11 +163,12 @@ class DetailedPage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const post = find(state.home, { id: ownProps.match.params.id });
   return {
-    title: state.home[ownProps.match.params.id].title,
-    author: state.home[ownProps.match.params.id].author,
-    body: state.home[ownProps.match.params.id].body,
-    comments: state.home[ownProps.match.params.id].comments
+    title: post.title,
+    author: post.author,
+    body: post.body,
+    comments: post.comments
   };
 }
 
