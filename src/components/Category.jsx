@@ -4,36 +4,26 @@ import orderBy from 'lodash/orderBy';
 import Post from './Post';
 import Modal from './ModalForm';
 
-function toCapitalize(str) {
-	if (typeof str === 'string') {
-		const lowercase = str.toLowerCase();
-		return `${lowercase.charAt(0).toUpperCase()}${str.slice(1)}`;
-	}
-	return null;
-}
-
 class Category extends Component {
 	state = {
-		modalIsOpen: false
+		modalIsOpen: false,
+		sortingOrder: 'timeStamp'
 	};
 	hasMatchedCategory = (c, category) => {
 		return c.toLowerCase() === category.toLowerCase();
 	};
-	createArticles = (posts, category) => {
-		posts = orderBy(posts, ['voteScore'], ['desc']);
-		//const condition = (category === 'home')?true:
+	handleChange = event => {
+		const sortBy = event.target.value;
+		this.setState({ sortingOrder: sortBy });
+	};
+	displayArticles = () => {
+		let { data: posts } = this.props;
+		posts = orderBy(posts, [this.state.sortingOrder], ['desc']);
 		return posts.map(post => {
 			return (
 				!post.deleted &&
-				(category.toLowerCase() === 'home' ? true : this.hasMatchedCategory(post.category, category)) &&
 				<li key={post.id}>
-					<Post
-						title={post.title}
-						author={post.author}
-						id={post.id}
-						onDelete={this.onDelete}
-						voteScore={post.voteScore}
-					/>
+					<Post {...post} />
 				</li>
 			);
 		});
@@ -47,8 +37,8 @@ class Category extends Component {
 		e.preventDefault();
 		this.setState({ modalIsOpen: true });
 	};
+
 	render() {
-		const { category } = this.props;
 		return (
 			<div>
 				<div className="post">
@@ -57,9 +47,16 @@ class Category extends Component {
 						onModalClose={this.onModalClose}
 						onModalOpen={this.onModalOpen}
 					/>
-					<h2>Recent Posts</h2>
+					<h2 style={{ display: 'inline-block' }}>Recent Posts</h2>
+					<p style={{ display: 'inline-block', margin: '0 1.5em 1em', fontSize: '0.85em' }}>
+						Sort by {' '}
+						<select value={this.state.sortingOrder} onChange={this.handleChange}>
+							<option value="timeStamp">time</option>
+							<option value="voteScore">vote</option>
+						</select>
+					</p>
 					<ul className="list-articles">
-						{this.createArticles(this.props.data, category)}
+						{this.displayArticles()}
 					</ul>
 				</div>
 				<div onClick={this.openModal} className="open-search">
@@ -72,9 +69,17 @@ class Category extends Component {
 	}
 }
 
-function mapStateToProps(state) {
+/*function mapDispatchToActions(dispatch) {
 	return {
-		data: state.home
+		onSortOrderBy(sortOrder) {
+			dispatch(sortBy(sortOrder));
+		}
+	};
+}*/
+
+function mapStateToProps(state, ownProps) {
+	return {
+		data: ownProps.category === 'Home' ? state.home : state.home.filter(post => post.category === ownProps.category)
 	};
 }
 

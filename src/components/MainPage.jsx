@@ -7,13 +7,13 @@ import { addPost } from '../actions';
 
 import './MainPage.css';
 
-function toCapitalize(str) {
+/*function toCapitalize(str) {
   if (typeof str === 'string') {
     const lowercase = str.toLowerCase();
     return `${lowercase.charAt(0).toUpperCase()}${str.slice(1)}`;
   }
   return null;
-}
+}*/
 
 class MainPage extends Component {
   state = {

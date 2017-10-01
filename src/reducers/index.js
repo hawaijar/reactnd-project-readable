@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import find from 'lodash/find';
+import orderBy from 'lodash/orderBy';
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST } from '../actions';
 
 const initialState = [
@@ -20,7 +21,7 @@ const initialState = [
     comments: [],
     deleted: false,
     category: 'React',
-    voteScore: 10
+    voteScore: 50
   },
   {
     id: '1504323052908',
@@ -37,7 +38,7 @@ const initialState = [
       Cold War themes, particularly the role of American technology and business in the fight against 
     communism.[1] Subsequent re-imaginings of Iron Man have transitioned from Cold War themes to contemporary 
     concerns, such as corporate crime and terrorism`,
-    timeStamp: 1509230663911,
+    timeStamp: 1709230663911,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -60,7 +61,7 @@ const initialState = [
     comments: [],
     deleted: false,
     category: 'React',
-    voteScore: 5
+    voteScore: 125
   }
 ];
 
@@ -90,7 +91,7 @@ const home = (state = initialState, action) => {
     }
     case EDIT_POST: {
       const { postId, body } = action.payload;
-      let updatedPost = state[postId];
+      let updatedPost = find(state, { id: postId });
       updatedPost.body = body;
       return { ...state, [postId]: updatedPost };
     }
@@ -104,8 +105,12 @@ const home = (state = initialState, action) => {
       const { post } = action.payload;
       return { ...state, [post.id]: post };
     }
+    /*case SORT_POST: {
+      const { sortBy } = action.payload;
+      return orderBy(state, [`${sortBy}`], ['desc']);
+    }*/
     default:
-      return state;
+      return orderBy(state, ['timeStamp'], ['desc']);
   }
 };
 

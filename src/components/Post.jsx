@@ -9,8 +9,12 @@ class Post extends Component {
     this.props.removePost(id);
   };
 
+  state = {
+    sortValue: 'timeStamp'
+  };
+
   render() {
-    const { id, timeStamp, title, author, voteScore, sortBy = 'voteScore', onSortOrderChange } = this.props;
+    const { id, timeStamp, title, author, voteScore } = this.props;
     return (
       <div>
         <div className="format-big">
@@ -23,13 +27,8 @@ class Post extends Component {
             <Link to={{ pathname: `/post/${id}`, state: { isEdit: true } }}>Edit</Link>
           </span>
           <span onClick={() => this.onDelete(id)}>Delete</span>
-          <p style={{ display: 'inline-block', margin: '0 1.5em 1em', fontSize: '0.85em' }}>
-            Sort by:
-            <span onClick={() => onSortOrderChange('score')}>Vote score</span>
-            <span onClick={() => onSortOrderChange('time')}>Last updated time</span>
-          </p>
           <span style={{ color: 'initial', cursor: 'initial' }}>
-            {sortBy === 'voteScore' ? `[${voteScore} point(s)]` : ''}
+            {`[${voteScore} point(s)]`}
           </span>
         </div>
 

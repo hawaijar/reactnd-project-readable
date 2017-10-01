@@ -32,12 +32,19 @@ export function editPost(postId, body) {
 export function deletePost(postId) {
   return {
     type: DELETE_POST,
-    payload: { postId}
+    payload: { postId }
   };
 }
 export function addPost(post) {
   return {
     type: ADD_POST,
-    payload: { post}
+    payload: { post }
   };
 }
+/*
+export function sortBy(sortBy) {
+  return {
+    type: SORT_POST,
+    payload: { sortBy }
+  };
+}*/
