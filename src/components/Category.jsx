@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import orderBy from 'lodash/orderBy';
 import Post from './Post';
 import Modal from './ModalForm';
+import { addPost } from '../actions';
 
 class Category extends Component {
 	state = {
@@ -37,6 +38,12 @@ class Category extends Component {
 		e.preventDefault();
 		this.setState({ modalIsOpen: true });
 	};
+	onAdd = post => {
+		this.props.newPost(post);
+	};
+	componentWillReceiveProps(nextProps) {
+		this.setState({ modalIsOpen: false });
+	}
 
 	render() {
 		return (
@@ -46,6 +53,7 @@ class Category extends Component {
 						modalIsOpen={this.state.modalIsOpen}
 						onModalClose={this.onModalClose}
 						onModalOpen={this.onModalOpen}
+						onAdd={this.onAdd}
 					/>
 					<h2 style={{ display: 'inline-block' }}>Recent Posts</h2>
 					<p style={{ display: 'inline-block', margin: '0 1.5em 1em', fontSize: '0.85em' }}>
@@ -60,7 +68,7 @@ class Category extends Component {
 					</ul>
 				</div>
 				<div onClick={this.openModal} className="open-search">
-					<a onClick={this.onOpen} href="/">
+					<a onClick={this.onModalOpen} href="/">
 						New
 					</a>
 				</div>
@@ -69,13 +77,13 @@ class Category extends Component {
 	}
 }
 
-/*function mapDispatchToActions(dispatch) {
+function mapDispatchToActions(dispatch) {
 	return {
-		onSortOrderBy(sortOrder) {
-			dispatch(sortBy(sortOrder));
+		newPost(post) {
+			dispatch(addPost(post));
 		}
 	};
-}*/
+}
 
 function mapStateToProps(state, ownProps) {
 	return {
@@ -83,4 +91,4 @@ function mapStateToProps(state, ownProps) {
 	};
 }
 
-export default connect(mapStateToProps, null)(Category);
+export default connect(mapStateToProps, mapDispatchToActions)(Category);

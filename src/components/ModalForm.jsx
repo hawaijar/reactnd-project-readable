@@ -30,10 +30,6 @@ const customStyles = {
 };
 
 class ModalForm extends Component {
-  openModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
-
   afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     this.subtitle.style.color = '#f00';
@@ -46,17 +42,16 @@ class ModalForm extends Component {
       title: this.title.value,
       body: this.body.value,
       timestamp: new Date().toString(),
-      score: 1,
+      voteScore: 1,
       author: 'Stan Lee',
       comments: [],
       deleted: false,
       category: this.category.value
     };
-    this.props.newPost(post);
-    this.setState({ modalIsOpen: false });
+    this.props.onAdd(post);
   };
   render() {
-    const { modalIsOpen, onModalClose, onModalOpen } = this.props;
+    const { modalIsOpen, onModalClose } = this.props;
     return (
       <div>
         <Modal

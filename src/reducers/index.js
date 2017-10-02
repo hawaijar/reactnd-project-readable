@@ -103,7 +103,7 @@ const home = (state = initialState, action) => {
     }
     case ADD_POST: {
       const { post } = action.payload;
-      return { ...state, [post.id]: post };
+      return [...state, post];
     }
     /*case SORT_POST: {
       const { sortBy } = action.payload;
