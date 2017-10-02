@@ -87,7 +87,7 @@ function mapDispatchToActions(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		data: ownProps.category === 'Home' ? state.home : state.home.filter(post => post.category === ownProps.category)
+		data: ownProps.category === 'home' ? state.home : state.home.filter(post => post.category === ownProps.category)
 	};
 }
 

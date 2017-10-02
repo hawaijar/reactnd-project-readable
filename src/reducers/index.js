@@ -20,7 +20,7 @@ const initialState = [
     author: 'Stan Lee',
     comments: [],
     deleted: false,
-    category: 'React',
+    category: 'react',
     voteScore: 50
   },
   {
@@ -43,7 +43,7 @@ const initialState = [
     author: 'Stan Lee',
     comments: [],
     deleted: false,
-    category: 'Udacity',
+    category: 'udacity',
     voteScore: 20
   },
   {
@@ -60,7 +60,7 @@ const initialState = [
     author: 'Stan Lee',
     comments: [],
     deleted: false,
-    category: 'React',
+    category: 'react',
     voteScore: 125
   }
 ];

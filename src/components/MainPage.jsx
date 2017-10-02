@@ -7,13 +7,13 @@ import { addPost } from '../actions';
 
 import './MainPage.css';
 
-/*function toCapitalize(str) {
+function toCapitalize(str) {
   if (typeof str === 'string') {
     const lowercase = str.toLowerCase();
     return `${lowercase.charAt(0).toUpperCase()}${str.slice(1)}`;
   }
   return null;
-}*/
+}
 
 class MainPage extends Component {
   state = {
@@ -21,19 +21,29 @@ class MainPage extends Component {
     categories: ['react', 'redux', 'udacity']
   };
 
+  createTabs = (startIndex = 1) => {
+    const categories = this.state.categories;
+    const keys = categories.map((category, index) => startIndex + index + 1);
+    const tabs = keys.map(key => {
+      const title = toCapitalize(categories[key - 2]);
+      const category = categories[key - 2];
+      return (
+        <Tab eventKey={key} key={category} title={title}>
+          <Category category={category} />
+        </Tab>
+      );
+    });
+    return tabs;
+  };
+
   render() {
     return (
       <div className="main">
         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
           <Tab eventKey={1} title="Home">
-            <Category category="Home" />
+            <Category category="home" />
           </Tab>
-          <Tab eventKey={2} title="React">
-            <Category category="React" />
-          </Tab>
-          <Tab eventKey={3} title="Udacity">
-            <Category category="Udacity" />
-          </Tab>
+          {this.createTabs()}
         </Tabs>
       </div>
     );
