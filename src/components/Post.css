@@ -1,16 +1,4 @@
-.post .list-articles li {
-  margin: 0.2em 0; }
-
-.post .list-articles .format-big {
-  display: flex;
-  flex-direction: row; }
-  .post .list-articles .format-big h3 {
-    margin: 0.21em 0; }
-  .post .list-articles .format-big span {
-    align-self: center;
-    padding: 0 0.5em;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: small;
-    padding-top: 0.3em; }
+.post {
+  font-size: 1.22rem; }
+  .post .list-articles li {
+    margin: 0.2em 0; }

@@ -53,14 +53,6 @@
 .list-articles a {
   /*color: blue;*/
 }
-.format-small {
-  font-size: 0.65em;
-  color: #888;
-}
-.format-small em {
-  color: #369;
-  font-style: normal;
-}
 .close-search {
   display: block;
   top: 20px;
@@ -74,9 +66,4 @@
   background-size: 28px;
   font-size: 0;
 }
-.post {
-  font-size: 0.95em;
-}
-.post .posted-by {
-  font-size: 0.85em;
-}
+

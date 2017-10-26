@@ -49,7 +49,7 @@ class Category extends Component {
       posts = orderBy(posts, [this.state.sortingOrder], ['desc']);
       return posts.map(post =>
         !post.deleted &&
-        <li key={post.id}>
+        <li key={post.id} className="pb-2">
           <Post {...post} />
         </li>);
     };
@@ -82,7 +82,7 @@ class Category extends Component {
             </Dialog>
             <div className="mt-3">
               <button
-                className="btn btn-primary"
+                className="btn btn-primary text-white"
                 onClick={this.onModalOpen}
               >Add Post
               </button>
