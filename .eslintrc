@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "func-names": ["error", "never"]
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true,
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ]
+}

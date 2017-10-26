@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
 import BackIcon from 'react-icons/lib/md/arrow-back';
+import Avatar from 'react-toolbox/lib/avatar';
 import authorImage from '../icons/author.png';
 import user1Image from '../icons/user1.jpg';
 import user2Image from '../icons/user2.png';
@@ -21,30 +22,30 @@ class DetailedPage extends Component {
     users: {
       1: {
         name: 'Shelley',
-        avatar: user1Image
+        avatar: user1Image,
       },
       2: {
         name: 'Marc',
-        avatar: user2Image
+        avatar: user2Image,
       },
       3: {
         name: 'Mike',
-        avatar: user3Image
+        avatar: user3Image,
       },
       4: {
         name: 'Kyle',
-        avatar: user4Image
+        avatar: user4Image,
       },
       5: {
         name: 'Bob',
-        avatar: user5Image
+        avatar: user5Image,
       },
       6: {
         name: 'Jane',
-        avatar: user6Image
-      }
+        avatar: user6Image,
+      },
     },
-    isEdit: false
+    isEdit: false,
   };
   addComment = () => {
     const parentId = this.props.match.params.id;
@@ -98,7 +99,11 @@ class DetailedPage extends Component {
             <h1>
               {title}
               <span>
-                <Link to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}>Edit</Link>
+                <Link
+                  to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}
+                >
+                  Edit
+                </Link>
               </span>
             </h1>
             <p className="posted-by">
@@ -108,16 +113,26 @@ class DetailedPage extends Component {
             {this.props.location.state &&
               <div className="edit-post">
                 <div className="first-box">
-                  <textarea name="comment" ref="textInput" autoFocus defaultValue={body} />
+                  <textarea
+                    name="comment"
+                    ref="textInput"
+                    autoFocus
+                    defaultValue={body}
+                  />
                 </div>
                 <div className="second-box">
                   <span>
-                    <Link onClick={() => this.onEdit(postId)} to={{ pathname: `/post/${postId}`, state: null }}>
+                    <Link
+                      onClick={() => this.onEdit(postId)}
+                      to={{ pathname: `/post/${postId}`, state: null }}
+                    >
                       Save
                     </Link>
                   </span>
                   <span>
-                    <Link to={{ pathname: `/post/${postId}`, state: null }}>Cancel</Link>
+                    <Link to={{ pathname: `/post/${postId}`, state: null }}>
+                      Cancel
+                    </Link>
                   </span>
                 </div>
               </div>}
@@ -128,7 +143,7 @@ class DetailedPage extends Component {
               style={{
                 marginBottom: '.35em',
                 fontSize: '1em',
-                color: '#666'
+                color: '#666',
               }}
             >
               Comments
@@ -139,9 +154,9 @@ class DetailedPage extends Component {
               </ul>
             </section>
             <section className="addComment">
-              <div className="avatar">
-                <img src={authorImage} alt="avatar" />
-              </div>
+              <Avatar>
+                <img src="https://placeimg.com/80/80/tech" />
+              </Avatar>
               <div className="comment">
                 <textarea
                   placeholder="Add your comment here"
@@ -168,7 +183,7 @@ function mapStateToProps(state, ownProps) {
     title: post.title,
     author: post.author,
     body: post.body,
-    comments: post.comments
+    comments: post.comments,
   };
 }
 
@@ -179,7 +194,7 @@ function mapDispatchToActions(dispatch) {
     },
     updatePost(postId, body) {
       dispatch(editPost(postId, body));
-    }
+    },
   };
 }
 
