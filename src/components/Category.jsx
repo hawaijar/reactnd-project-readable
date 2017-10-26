@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import orderBy from 'lodash/orderBy';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 import Dialog from 'material-ui/Dialog';
 import uuid from 'uuid/v1';
 import SemanticForm from './SemanticForm';
@@ -11,6 +12,12 @@ class Category extends Component {
     state = {
       modalIsOpen: false,
       sortingOrder: 'timeStamp',
+      dropdownOpen: false,
+    };
+    toggle = () => {
+      this.setState({
+        dropdownOpen: !this.state.dropdownOpen,
+      });
     };
     onDelete = () => {
     };
@@ -80,14 +87,31 @@ class Category extends Component {
                 categories={this.props.categories}
               />
             </Dialog>
-            <div className="mt-3">
-              <button
-                className="btn btn-primary text-white"
-                onClick={this.onModalOpen}
-              >Add Post
-              </button>
+            <div className="mt-3 container-fluid">
+              <div className="row justify-content-start">
+                <button
+                  className="btn btn-primary text-white"
+                  onClick={this.onModalOpen}
+                >Add Post
+                </button>
+                <div>
+                  {this.props.data.length > 0 && <div style={{ display: 'flex' }}>
+                    <span className="align-self-center ml-5">Sort by: </span>
+                    <DropdownButton
+                      className="btn-outline-secondary ml-2"
+                      title="Vote score"
+                      id="bg-justified-dropdown"
+                    >
+                      <MenuItem eventKey="1">Vote score</MenuItem>
+                      <MenuItem eventKey="2">Last updated time</MenuItem>
+                    </DropdownButton>
+                  </div>}
+                </div>
+
+              </div>
+
             </div>
-            <ul className="list-articles lead">
+            <ul className="list-articles mt-3">
               {this.displayArticles()}
             </ul>
           </div>

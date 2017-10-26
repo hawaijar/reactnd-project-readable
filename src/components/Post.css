@@ -1,4 +1,6 @@
 .post {
   font-size: 1.22rem; }
+  .post .dropdown-toggle::after {
+    display: none; }
   .post .list-articles li {
     margin: 0.2em 0; }

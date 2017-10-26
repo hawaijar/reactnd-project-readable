@@ -1,4 +1,7 @@
 .post {
+  .dropdown-toggle::after{
+    display: none;
+  }
   font-size: 1.22rem;
   .list-articles {
     li {
