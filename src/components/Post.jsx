@@ -16,7 +16,7 @@ class Post extends Component {
 
     render() {
       const {
-        id, timeStamp, title, author, voteScore,
+        id, timestamp, title, author, voteScore,
       } = this.props;
       return (
         <div>
@@ -54,7 +54,7 @@ class Post extends Component {
 
           <div className="text-muted mt-2 small">
             <span>
-            Submitted on {new Date(parseInt(timeStamp, 10)).toString()} by <em>{author}</em>
+            Submitted on {new Date(parseInt(timestamp, 10)).toString()} by <em>{author}</em>
             </span>
           </div>
         </div>
