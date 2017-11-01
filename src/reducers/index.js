@@ -21,7 +21,7 @@ const initialState = [
     comments: [],
     deleted: false,
     category: 'react',
-    voteScore: 50
+    voteScore: 50,
   },
   {
     id: '1504323052908',
@@ -44,7 +44,7 @@ const initialState = [
     comments: [],
     deleted: false,
     category: 'udacity',
-    voteScore: 20
+    voteScore: 20,
   },
   {
     id: '1594329055909',
@@ -61,8 +61,8 @@ const initialState = [
     comments: [],
     deleted: false,
     category: 'react',
-    voteScore: 125
-  }
+    voteScore: 125,
+  },
 ];
 
 const home = (state = initialState, action) => {
@@ -70,28 +70,30 @@ const home = (state = initialState, action) => {
     case ADD_COMMENT: {
       const { comment } = action.payload;
       const parentId = comment.parentId;
-      let updatedPost = state[parentId];
+      const updatedPost = state[parentId];
       updatedPost.comments = [...updatedPost.comments, comment];
       return { ...state, [parentId]: updatedPost };
     }
     case EDIT_COMMENT: {
       const { comment } = action.payload;
       const parentId = comment.parentId;
-      let updatedPost = state[parentId];
-      updatedPost.comments = updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
+      const updatedPost = state[parentId];
+      updatedPost.comments =
+          updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
       updatedPost.comments = [...updatedPost.comments, comment];
       return { ...state, [parentId]: updatedPost };
     }
     case DELETE_COMMENT: {
       const { comment } = action.payload;
-      const parentId = comment.parentId;
-      let updatedPost = state[parentId];
-      updatedPost.comments = updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
+      const { parentId } = comment;
+      const updatedPost = state[parentId];
+      updatedPost.comments =
+          updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
       return { ...state, [parentId]: updatedPost };
     }
     case EDIT_POST: {
       const { postId, body } = action.payload;
-      let updatedPost = find(state, { id: postId });
+      const updatedPost = find(state, { id: postId });
       updatedPost.body = body;
       return { ...state, [postId]: updatedPost };
     }
@@ -105,16 +107,16 @@ const home = (state = initialState, action) => {
       const { post } = action.payload;
       return [...state, post];
     }
-    /*case SORT_POST: {
+    /* case SORT_POST: {
       const { sortBy } = action.payload;
       return orderBy(state, [`${sortBy}`], ['desc']);
-    }*/
+    } */
     default:
       return orderBy(state, ['timeStamp'], ['desc']);
   }
 };
 
 const rootReducer = combineReducers({
-  home
+  home,
 });
 export default rootReducer;
