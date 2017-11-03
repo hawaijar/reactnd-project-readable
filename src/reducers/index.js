@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
-import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST } from '../actions';
+import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST, SORT_POST } from '../actions';
 
 const initialState = [
   {
@@ -15,7 +15,7 @@ const initialState = [
     New York who becomes Spider-Man after being bitten by a genetically altered spider. 
     Parker must stop Dr. Curt Connors as a mutated lizard, from spreading a mutation serum 
     to the city's human population.`,
-    timeStamp: 1506230663901,
+    timestamp: 1506230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -38,7 +38,7 @@ const initialState = [
       Cold War themes, particularly the role of American technology and business in the fight against 
     communism.[1] Subsequent re-imaginings of Iron Man have transitioned from Cold War themes to contemporary 
     concerns, such as corporate crime and terrorism`,
-    timeStamp: 1709230663911,
+    timestamp: 1709230663911,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -55,7 +55,7 @@ const initialState = [
     hulking and muscular humanoid possessing a vast degree of physical strength, and his alter ego Bruce Banner, 
     a physically weak, socially withdrawn, and emotionally reserved physicist, the two existing as personalities 
     independent and resenting of the other.`,
-    timeStamp: 1556230663901,
+    timestamp: 1556230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -107,10 +107,10 @@ const home = (state = initialState, action) => {
       const { post } = action.payload;
       return [...state, post];
     }
-    /* case SORT_POST: {
+    case SORT_POST: {
       const { sortBy } = action.payload;
       return orderBy(state, [`${sortBy}`], ['desc']);
-    } */
+    }
     default:
       return orderBy(state, ['timeStamp'], ['desc']);
   }

@@ -48,10 +48,11 @@ class Category extends Component {
     };
     hasMatchedCategory = (c, category) =>
       c.toLowerCase() === category.toLowerCase();
+
     handleChange = (event) => {
-      const sortBy = event.target.value;
-      this.setState({ sortingOrder: sortBy });
-    };
+      //console.log('selected:', this.map.get(event));
+    }
+
     displayArticles = () => {
       let { data: posts } = this.props;
       posts = orderBy(posts, [this.state.sortingOrder], ['desc']);
@@ -94,6 +95,7 @@ class Category extends Component {
                   {this.props.data.length > 0 && <div style={{ display: 'flex' }}>
                     <span className="align-self-center ml-5">Sort by: </span>
                     <DropdownButton
+                      onSelect={this.handleChange}
                       className="btn-outline-secondary ml-2"
                       title="Vote score"
                       id="bg-justified-dropdown"
@@ -101,7 +103,7 @@ class Category extends Component {
                       <MenuItem eventKey="1">Vote score</MenuItem>
                       <MenuItem eventKey="2">Last updated time</MenuItem>
                     </DropdownButton>
-                                                 </div>}
+                  </div>}
                 </div>
 
               </div>
