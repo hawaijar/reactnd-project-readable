@@ -15,7 +15,7 @@ const initialState = [
     New York who becomes Spider-Man after being bitten by a genetically altered spider. 
     Parker must stop Dr. Curt Connors as a mutated lizard, from spreading a mutation serum 
     to the city's human population.`,
-    timestamp: 1506230663901,
+    timeStamp: 1506230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -38,7 +38,7 @@ const initialState = [
       Cold War themes, particularly the role of American technology and business in the fight against 
     communism.[1] Subsequent re-imaginings of Iron Man have transitioned from Cold War themes to contemporary 
     concerns, such as corporate crime and terrorism`,
-    timestamp: 1709230663911,
+    timeStamp: 1709230663911,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -55,7 +55,7 @@ const initialState = [
     hulking and muscular humanoid possessing a vast degree of physical strength, and his alter ego Bruce Banner, 
     a physically weak, socially withdrawn, and emotionally reserved physicist, the two existing as personalities 
     independent and resenting of the other.`,
-    timestamp: 1556230663901,
+    timeStamp: 1556230663901,
     score: 1,
     author: 'Stan Lee',
     comments: [],
@@ -69,14 +69,14 @@ const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
       const { comment } = action.payload;
-      const parentId = comment.parentId;
+      const { parentId } = comment;
       const updatedPost = state[parentId];
       updatedPost.comments = [...updatedPost.comments, comment];
       return { ...state, [parentId]: updatedPost };
     }
     case EDIT_COMMENT: {
       const { comment } = action.payload;
-      const parentId = comment.parentId;
+      const { parentId } = comment;
       const updatedPost = state[parentId];
       updatedPost.comments =
           updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
@@ -108,8 +108,8 @@ const home = (state = initialState, action) => {
       return [...state, post];
     }
     case SORT_POST: {
-      const { sortBy } = action.payload;
-      return orderBy(state, [`${sortBy}`], ['desc']);
+      const { sortMethod } = action.payload;
+      return orderBy(state, [`${sortMethod}`], ['desc']);
     }
     default:
       return orderBy(state, ['timeStamp'], ['desc']);

@@ -43,9 +43,9 @@ export function addPost(post) {
   };
 }
 
-export function sortBy(sortBy) {
+export function sortBy(sortMethod) {
   return {
     type: SORT_POST,
-    payload: { sortBy },
+    payload: { sortMethod },
   };
 }
