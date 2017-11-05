@@ -24,7 +24,7 @@ class Comment extends Component {
     });
   };
   onSave = (comment) => {
-    comment.text = this.refs.textInput.value;
+    comment.body = this.refs.textInput.value;
     this.refs.textInput.value = '';
     this.props.updateComment(comment);
     this.setState({
@@ -107,7 +107,7 @@ class Comment extends Component {
                   name="comment"
                   ref="textInput"
                   autoFocus
-                  defaultValue={comment.text}
+                  defaultValue={comment.body}
                 />
               </div>
               <div className="second-box">

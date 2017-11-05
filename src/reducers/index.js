@@ -78,11 +78,10 @@ const home = (state = initialState, action) => {
     case EDIT_COMMENT: {
       const { comment } = action.payload;
       const { parentId } = comment;
-      const updatedPost = state[parentId];
-      updatedPost.comments =
-          updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
-      updatedPost.comments = [...updatedPost.comments, comment];
-      return { ...state, [parentId]: updatedPost };
+      const updatedPost = find(state, { id: parentId });
+      updatedPost.comments = [...updatedPost.comments.filter(c => c.id !== comment.id), comment];
+      const updatedState = [...state.filter(p => updatedPost.id !== p.id), updatedPost];
+      return [...updatedState];
     }
     case DELETE_COMMENT: {
       const { comment } = action.payload;
