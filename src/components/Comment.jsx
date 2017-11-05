@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import VoteUpIcon from 'react-icons/lib/md/arrow-drop-up';
 import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import { editComment, deleteComment } from '../actions';
+
+const { func } = PropTypes;
 
 class Comment extends Component {
   state = {
     isEdit: false,
   };
   onDelete = (comment) => {
+    /* eslint-disable no-param-reassign */
     comment.deleted = true;
     this.props.removeComment(comment);
   };
@@ -24,8 +28,8 @@ class Comment extends Component {
     });
   };
   onSave = (comment) => {
-    comment.body = this.refs.textInput.value;
-    this.refs.textInput.value = '';
+    comment.body = this.textInput.value;
+    this.textInput.value = '';
     this.props.updateComment(comment);
     this.setState({
       isEdit: false,
@@ -105,7 +109,7 @@ class Comment extends Component {
                 <textarea
                   placeholder="Add your comment here"
                   name="comment"
-                  ref="textInput"
+                  ref={(textInput) => { this.textInput = textInput; }}
                   autoFocus
                   defaultValue={comment.body}
                 />
@@ -121,6 +125,15 @@ class Comment extends Component {
     );
   }
 }
+
+Comment.propTypes = {
+  removeComment: func,
+  updateComment: func,
+};
+Comment.defaultProps = {
+  removeComment: f => f,
+  updateComment: f => f,
+};
 function mapDispatchToActions(dispatch) {
   return {
     updateComment(comment) {

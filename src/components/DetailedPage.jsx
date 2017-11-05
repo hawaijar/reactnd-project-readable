@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import BackIcon from 'react-icons/lib/md/arrow-back';
 import Avatar from 'react-toolbox/lib/avatar';
-import authorImage from '../icons/author.png';
 import user1Image from '../icons/user1.jpg';
 import user2Image from '../icons/user2.png';
 import user3Image from '../icons/user3.png';
@@ -19,12 +18,11 @@ import '../App.css';
 import './DetailedPage.css';
 
 const {
-  string, shape, arrayOf, any,
-} = PropType;
+  string, arrayOf, func, any,
+} = PropTypes;
 
 class DetailedPage extends Component {
   state = {
-    comments: [],
     users: {
       1: {
         name: 'Shelley',
@@ -51,22 +49,19 @@ class DetailedPage extends Component {
         avatar: user6Image,
       },
     },
-    isEdit: false,
   };
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-  onEdit = (postId) => {
-    const body = this.refs.textInput.value;
-    this.setState({ isEdit: false });
-    this.props.updatePost(postId, body);
+  onEdit = () => {
+    const body = this.postText.value;
+    const { post } = this.props;
+    post.body = body;
+    this.props.updatePost(post);
   };
   addComment = () => {
     const postId = this.props.match.params.id;
     const comment = {};
     comment.body = this.textInput.value;
     comment.timestamp = Date.now();
-    const randomId = Math.floor(Math.random() * 6 + 1);
+    const randomId = Math.floor((Math.random() * 6) + 1);
     const randomUser = this.state.users[randomId];
     comment.id = new Date().getTime().toString();
     comment.author = randomUser.name;
@@ -128,7 +123,7 @@ class DetailedPage extends Component {
                 <div className="first-box">
                   <textarea
                     name="comment"
-                    ref="textInput"
+                    ref={(input) => { this.postText = input; }}
                     autoFocus
                     defaultValue={body}
                   />
@@ -136,7 +131,7 @@ class DetailedPage extends Component {
                 <div className="second-box">
                   <span>
                     <Link
-                      onClick={() => this.onEdit(postId)}
+                      onClick={() => this.onEdit()}
                       to={{ pathname: `/post/${postId}`, state: null }}
                     >
                       Save
@@ -160,7 +155,7 @@ class DetailedPage extends Component {
                 color: '#666',
               }}
             >
-              Comments
+              {`${comments.length} Comments`}
             </span>
             <section className="display-comment">
               <ul className="comment-section">
@@ -196,6 +191,9 @@ DetailedPage.propTypes = {
   author: string,
   body: string,
   comments: arrayOf(string),
+  updatePost: func,
+  pushComment: func,
+  post: any,
 };
 
 DetailedPage.defaultProps = {
@@ -203,6 +201,9 @@ DetailedPage.defaultProps = {
   author: '',
   body: '',
   comments: [],
+  updatePost: f => f,
+  pushComment: f => f,
+  post: null,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -211,7 +212,7 @@ function mapStateToProps(state, ownProps) {
     title, author, body, comments, updateComment,
   } = post;
   return {
-    title, author, body, comments, updateComment,
+    title, author, body, comments, updateComment, post,
   };
 }
 

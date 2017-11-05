@@ -4,11 +4,10 @@ import orderBy from 'lodash/orderBy';
 import find from 'lodash/find';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import Dialog from 'material-ui/Dialog';
-import uuid from 'uuid/v1';
+import PropTypes from 'prop-types';
 import SemanticForm from './SemanticForm';
 import Post from './Post';
 import { addPost, editPost, sortBy, deletePost } from '../actions';
-import PropTypes from 'prop-types';
 
 const {
   func, string, arrayOf, any,
