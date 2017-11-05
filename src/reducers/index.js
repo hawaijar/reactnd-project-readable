@@ -101,7 +101,8 @@ const home = (state = initialState, action) => {
       const { postId } = action.payload;
       const updatedPost = find(state, { id: postId });
       updatedPost.deleted = true;
-      return { ...state, [postId]: updatedPost };
+      const updatedState = [...state.filter(post => post.id !== postId), updatedPost];
+      return [...updatedState];
     }
     case ADD_POST: {
       const { post } = action.payload;

@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import uuid from 'uuid/v1';
 import SemanticForm from './SemanticForm';
 import Post from './Post';
-import { addPost, sortBy } from '../actions';
+import { addPost, sortBy, deletePost } from '../actions';
 
 class Category extends Component {
   constructor() {
@@ -62,12 +62,12 @@ class Category extends Component {
   };
 
   displayArticles = () => {
-    const { data: posts } = this.props;
-    // posts = orderBy(posts, [this.state.sortingOrder], ['desc']);
+    let { data: posts } = this.props;
+    posts = orderBy(posts, [this.state.sortingOrder], ['desc']);
     return posts.map(post =>
       !post.deleted && (
       <li key={post.id} className="pb-2">
-        <Post {...post} />
+        <Post {...post} onDelete={this.onDelete} />
       </li>
       ));
   };
@@ -75,7 +75,10 @@ class Category extends Component {
   componentWillReceiveProps() {
     this.setState({ modalIsOpen: false });
   }
-  onDelete = () => {};
+  onDelete = (id) => {
+    console.log('id:', id);
+    this.props.delete(id);
+  };
 
   render() {
     return (
@@ -134,6 +137,9 @@ function mapDispatchToActions(dispatch) {
     },
     doSort(sortMethod) {
       dispatch(sortBy(sortMethod));
+    },
+    delete(id) {
+      dispatch(deletePost(id));
     },
   };
 }
