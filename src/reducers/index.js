@@ -69,10 +69,11 @@ const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
       const { comment } = action.payload;
-      const { parentId } = comment;
-      const updatedPost = state[parentId];
+      const { postId } = comment;
+      const updatedPost = find(state, { id: postId });
       updatedPost.comments = [...updatedPost.comments, comment];
-      return { ...state, [parentId]: updatedPost };
+      const updatedState = [...state.filter(p => updatedPost.id !== p.id), updatedPost];
+      return [...updatedState];
     }
     case EDIT_COMMENT: {
       const { comment } = action.payload;

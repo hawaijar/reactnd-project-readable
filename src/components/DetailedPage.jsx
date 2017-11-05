@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropType from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
@@ -15,6 +16,10 @@ import { addComment, editPost } from '../actions';
 import Comment from './Comment';
 import '../App.css';
 import './DetailedPage.css';
+
+const {
+  string, shape, arrayOf, any,
+} = PropType;
 
 class DetailedPage extends Component {
   state = {
@@ -47,17 +52,25 @@ class DetailedPage extends Component {
     },
     isEdit: false,
   };
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+  onEdit = (postId) => {
+    const body = this.refs.textInput.value;
+    this.setState({ isEdit: false });
+    this.props.updatePost(postId, body);
+  };
   addComment = () => {
-    const parentId = this.props.match.params.id;
+    const postId = this.props.match.params.id;
     const comment = {};
     comment.text = this.textInput.value;
     comment.timestamp = Date.now();
-    let randomId = Math.floor(Math.random() * 6 + 1);
-    let randomUser = this.state.users[randomId];
+    const randomId = Math.floor(Math.random() * 6 + 1);
+    const randomUser = this.state.users[randomId];
     comment.id = new Date().getTime().toString();
     comment.author = randomUser.name;
     comment.avatar = randomUser.avatar;
-    comment.parentId = parentId;
+    comment.postId = postId;
     comment.parentDeleted = false;
     comment.voteScore = 0;
     comment.deleted = false;
@@ -65,27 +78,22 @@ class DetailedPage extends Component {
     this.textInput.value = '';
   };
 
-  onEdit = postId => {
-    const body = this.refs.textInput.value;
-    this.setState({ isEdit: false });
-    this.props.updatePost(postId, body);
-  };
-
-  displayComments = (comments, updateComment) => {
+  displayComments = (comments) => {
     if (comments.length === 0) {
       return null;
     }
-    return comments.map((comment, index) => {
-      return (
-        <li className="comment" key={comment.id}>
-          <Comment {...comment} />
-        </li>
-      );
-    });
+    return comments.map(comment => (
+      <li className="comment" key={comment.id}>
+        <Comment {...comment} />
+      </li>
+    ));
   };
 
+
   render() {
-    const { title, author, body, comments, updateComment } = this.props;
+    const {
+      title, author, body, comments,
+    } = this.props;
     const postId = this.props.match.params.id;
     return (
       <div>
@@ -106,11 +114,9 @@ class DetailedPage extends Component {
                 </Link>
               </span>
             </h1>
-            <p className="posted-by">
-              Posted by {author}
-            </p>
+            <p className="posted-by">Posted by {author}</p>
             {!this.props.location.state && body}
-            {this.props.location.state &&
+            {this.props.location.state && (
               <div className="edit-post">
                 <div className="first-box">
                   <textarea
@@ -135,7 +141,8 @@ class DetailedPage extends Component {
                     </Link>
                   </span>
                 </div>
-              </div>}
+              </div>
+            )}
           </article>
           <hr />
           <section className="commentContainer">
@@ -150,18 +157,18 @@ class DetailedPage extends Component {
             </span>
             <section className="display-comment">
               <ul className="comment-section">
-                {this.displayComments(comments, updateComment)}
+                {this.displayComments(comments)}
               </ul>
             </section>
             <section className="addComment">
               <Avatar>
-                <img src="https://placeimg.com/80/80/tech" />
+                <img src="https://placeimg.com/80/80/tech" alt="Avatar icon" />
               </Avatar>
               <div className="comment">
                 <textarea
                   placeholder="Add your comment here"
                   name="comment"
-                  ref={input => {
+                  ref={(input) => {
                     this.textInput = input;
                   }}
                 />
@@ -177,13 +184,27 @@ class DetailedPage extends Component {
   }
 }
 
+DetailedPage.propTypes = {
+  title: string,
+  author: string,
+  body: string,
+  comments: arrayOf(string),
+};
+
+DetailedPage.defaultProps = {
+  title: '',
+  author: '',
+  body: '',
+  comments: [],
+};
+
 function mapStateToProps(state, ownProps) {
   const post = find(state.home, { id: ownProps.match.params.id });
+  const {
+    title, author, body, comments, updateComment,
+  } = post;
   return {
-    title: post.title,
-    author: post.author,
-    body: post.body,
-    comments: post.comments,
+    title, author, body, comments, updateComment,
   };
 }
 
