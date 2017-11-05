@@ -92,10 +92,10 @@ const home = (state = initialState, action) => {
       return { ...state, [parentId]: updatedPost };
     }
     case EDIT_POST: {
-      const { postId, body } = action.payload;
-      const updatedPost = find(state, { id: postId });
-      updatedPost.body = body;
-      return { ...state, [postId]: updatedPost };
+      const { post } = action.payload;
+      const updatedPost = find(state, { id: post.id });
+      const updatedState = [...state.filter(p => post.id !== p.id), updatedPost];
+      return [...updatedState];
     }
     case DELETE_POST: {
       const { postId } = action.payload;

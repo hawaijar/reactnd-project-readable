@@ -17,7 +17,7 @@ class Post extends Component {
 
   render() {
     const {
-      id, timeStamp, title, author, voteScore,
+      id, timeStamp, title, author, voteScore, onEdit,
     } = this.props;
     return (
       <div>
@@ -32,10 +32,10 @@ class Post extends Component {
               </Link>
             </h3>
             <div className="ml-4" aria-label="Edit Delete">
-              <a href="#" className="">
+              <a href="#0" className="" onClick={() => onEdit(id)}>
                 <EditIcon />
               </a>
-              <a href="#" className="pl-2">
+              <a href="#0" className="pl-2">
                 <TrashIcon onClick={e => this.onDelete(id)} />
               </a>
               <span className="ml-3 badge badge-pill badge-secondary">
@@ -72,10 +72,12 @@ Post.propTypes = {
   author: string,
   voteScore: number,
   onDelete: func,
+  onEdit: func,
 };
 Post.defaultProps = {
   removePost: f => f,
   onDelete: f => f,
+  onEdit: f => f,
   id: '',
   timeStamp: 0,
   title: '',

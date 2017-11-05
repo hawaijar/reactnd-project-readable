@@ -24,10 +24,10 @@ export function deleteComment(comment) {
     payload: { comment },
   };
 }
-export function editPost(postId, body) {
+export function editPost(post) {
   return {
     type: EDIT_POST,
-    payload: { postId, body },
+    payload: { post },
   };
 }
 export function deletePost(postId) {
