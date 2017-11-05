@@ -131,5 +131,4 @@ function mapDispatchToActions(dispatch) {
     },
   };
 }
-
 export default connect(null, mapDispatchToActions)(Comment);
