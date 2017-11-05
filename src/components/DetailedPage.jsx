@@ -3,6 +3,7 @@ import PropType from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
+import orderBy from 'lodash/orderBy';
 import BackIcon from 'react-icons/lib/md/arrow-back';
 import Avatar from 'react-toolbox/lib/avatar';
 import authorImage from '../icons/author.png';
@@ -82,7 +83,9 @@ class DetailedPage extends Component {
     if (comments.length === 0) {
       return null;
     }
-    return comments.map((comment) => {
+    const sortBy = 'voteScore';
+    const sortedCommentsByVote = orderBy(comments, [`${sortBy}`], ['desc']);
+    return sortedCommentsByVote.map((comment) => {
       if (!comment.deleted) {
         return (
           <li className="comment" key={comment.id}>

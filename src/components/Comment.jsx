@@ -90,7 +90,7 @@ class Comment extends Component {
                   width={50}
                   height={50}
                 />
-                <span>{`(${comment.voteScore})`}</span>
+                <span>{`(Vote ${comment.voteScore})`}</span>
                 <VoteDownIcon
                   onClick={() => this.onVoteScoreDown(comment)}
                   width={50}
