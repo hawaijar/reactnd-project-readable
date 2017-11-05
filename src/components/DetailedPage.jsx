@@ -63,14 +63,14 @@ class DetailedPage extends Component {
   addComment = () => {
     const postId = this.props.match.params.id;
     const comment = {};
-    comment.text = this.textInput.value;
+    comment.body = this.textInput.value;
     comment.timestamp = Date.now();
     const randomId = Math.floor(Math.random() * 6 + 1);
     const randomUser = this.state.users[randomId];
     comment.id = new Date().getTime().toString();
     comment.author = randomUser.name;
     comment.avatar = randomUser.avatar;
-    comment.postId = postId;
+    comment.parentId = postId;
     comment.parentDeleted = false;
     comment.voteScore = 0;
     comment.deleted = false;
@@ -82,13 +82,17 @@ class DetailedPage extends Component {
     if (comments.length === 0) {
       return null;
     }
-    return comments.map(comment => (
-      <li className="comment" key={comment.id}>
-        <Comment {...comment} />
-      </li>
-    ));
-  };
-
+    return comments.map((comment) => {
+      if (!comment.deleted) {
+        return (
+          <li className="comment" key={comment.id}>
+            <Comment {...comment} />
+          </li>
+        );
+      }
+      return null;
+    });
+  }
 
   render() {
     const {

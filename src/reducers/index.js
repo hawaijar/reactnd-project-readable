@@ -69,8 +69,8 @@ const home = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
       const { comment } = action.payload;
-      const { postId } = comment;
-      const updatedPost = find(state, { id: postId });
+      const { parentId } = comment;
+      const updatedPost = find(state, { id: parentId });
       updatedPost.comments = [...updatedPost.comments, comment];
       const updatedState = [...state.filter(p => updatedPost.id !== p.id), updatedPost];
       return [...updatedState];
@@ -87,10 +87,10 @@ const home = (state = initialState, action) => {
     case DELETE_COMMENT: {
       const { comment } = action.payload;
       const { parentId } = comment;
-      const updatedPost = state[parentId];
-      updatedPost.comments =
-          updatedPost.comments.filter(eachComment => comment.id !== eachComment.id);
-      return { ...state, [parentId]: updatedPost };
+      const updatedPost = find(state, { id: parentId });
+      updatedPost.comments = [...updatedPost.comments.filter(c => c.id !== comment.id), comment];
+      const updatedState = [...state.filter(p => updatedPost.id !== p.id), updatedPost];
+      return [...updatedState];
     }
     case EDIT_POST: {
       const { post } = action.payload;
@@ -102,6 +102,11 @@ const home = (state = initialState, action) => {
       const { postId } = action.payload;
       const updatedPost = find(state, { id: postId });
       updatedPost.deleted = true;
+      if (updatedPost.comments.length > 0) {
+        for (let i = 0; i < updatedPost.comments.length; i += 1) {
+          updatedPost.comments[i].parentDeleted = true;
+        }
+      }
       const updatedState = [...state.filter(post => post.id !== postId), updatedPost];
       return [...updatedState];
     }

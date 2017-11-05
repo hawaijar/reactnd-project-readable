@@ -3,52 +3,49 @@ import { connect } from 'react-redux';
 import VoteUpIcon from 'react-icons/lib/md/arrow-drop-up';
 import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
 import moment from 'moment';
-import {
-  editComment,
-  deleteComment,
-} from '../actions';
+import { editComment, deleteComment } from '../actions';
 
 class Comment extends Component {
   state = {
     isEdit: false,
-  }
-  onDelete = comment => {
+  };
+  onDelete = (comment) => {
     comment.deleted = true;
     this.props.removeComment(comment);
   };
   onEdit = () => {
     this.setState({
-      isEdit: true
+      isEdit: true,
     });
   };
   onCancel = () => {
     this.setState({
-      isEdit: false
+      isEdit: false,
     });
   };
-  onSave = comment => {
+  onSave = (comment) => {
     comment.text = this.refs.textInput.value;
     this.refs.textInput.value = '';
     this.props.updateComment(comment);
     this.setState({
-      isEdit: false
+      isEdit: false,
     });
   };
-  onVoteScoreUp = comment => {
+  onVoteScoreUp = (comment) => {
     comment.voteScore += 1;
     this.props.updateComment(comment);
   };
-  onVoteScoreDown = comment => {
+  onVoteScoreDown = (comment) => {
     comment.voteScore -= 1;
     this.props.updateComment(comment);
   };
 
   render() {
-    const comment = {...this.props};
+    const comment = { ...this.props };
     return (
       <div className="comment-box">
         <div className="info-avatar">
-          <a className="avatar" href="">
+          <a className="avatar" href="#0">
             <img
               src={comment.avatar}
               width="35"
@@ -57,14 +54,14 @@ class Comment extends Component {
             />
           </a>
           <div className="info">
-            <a href="">{comment.author}</a>
+            <a href="#0">{comment.author}</a>
             <span
               className="delete"
               onClick={() => this.onDelete(comment)}
               style={{
                 color: 'blue',
                 textDecoration: 'underline',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
             >
               Delete
@@ -75,7 +72,7 @@ class Comment extends Component {
               style={{
                 color: 'blue',
                 textDecoration: 'underline',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
             >
               Edit
@@ -86,7 +83,7 @@ class Comment extends Component {
         <div style={{ marginTop: '0.6em', lineHeight: '1.5em' }}>
           {!this.state.isEdit && (
             <div className="comment-vote">
-              <span>{comment.text}</span>
+              <span>{comment.body}</span>
               <div>
                 <VoteUpIcon
                   onClick={() => this.onVoteScoreUp(comment)}
@@ -131,7 +128,7 @@ function mapDispatchToActions(dispatch) {
     },
     removeComment(comment) {
       dispatch(deleteComment(comment));
-    }
+    },
   };
 }
 
