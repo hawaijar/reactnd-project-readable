@@ -14,6 +14,8 @@ import user5Image from '../icons/user5.png';
 import user6Image from '../icons/user6.png';
 import { addComment, editPost } from '../actions';
 import Comment from './Comment';
+import VoteUpIcon from 'react-icons/lib/md/arrow-drop-up';
+import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
 import '../App.css';
 import './DetailedPage.css';
 
@@ -56,6 +58,16 @@ class DetailedPage extends Component {
     post.body = body;
     this.props.updatePost(post);
   };
+  upVote = () => {
+    const { post } = this.props;
+    post.voteScore += 1;
+    this.props.updatePost(post);
+  };
+  downVote = () => {
+    const { post } = this.props;
+    post.voteScore -= 1;
+    this.props.updatePost(post);
+  };
   addComment = () => {
     const postId = this.props.match.params.id;
     const comment = {};
@@ -94,7 +106,7 @@ class DetailedPage extends Component {
 
   render() {
     const {
-      title, author, body, comments,
+      title, author, body, comments, post,
     } = this.props;
     const postId = this.props.match.params.id;
     return (
@@ -114,6 +126,28 @@ class DetailedPage extends Component {
                 >
                   Edit
                 </Link>
+              </span>
+
+              <span style={{
+                padding: '0', cursor: 'initial', color: 'initial',
+              }}
+              >
+                <VoteUpIcon
+                  onClick={this.upVote}
+                  width={50}
+                  height={50}
+                  style={{ cursor: 'pointer' }}
+                />
+                <div style={{ display: 'inline-flex', flexDirection: 'column', textAlign: 'center' }}>
+                  <div>{`${post.voteScore}`}</div>
+                  <div>votes</div>
+                </div>
+                <VoteDownIcon
+                  onClick={this.downVote}
+                  width={50}
+                  height={50}
+                  style={{ cursor: 'pointer' }}
+                />
               </span>
             </h1>
             <p className="posted-by">Posted by {author}</p>
@@ -209,10 +243,10 @@ DetailedPage.defaultProps = {
 function mapStateToProps(state, ownProps) {
   const post = find(state.home, { id: ownProps.match.params.id });
   const {
-    title, author, body, comments, updateComment,
+    title, author, body, comments, updateComment, voteScore,
   } = post;
   return {
-    title, author, body, comments, updateComment, post,
+    title, author, body, comments, updateComment, post, voteScore,
   };
 }
 
@@ -221,8 +255,8 @@ function mapDispatchToActions(dispatch) {
     pushComment(comment) {
       dispatch(addComment(comment));
     },
-    updatePost(postId, body) {
-      dispatch(editPost(postId, body));
+    updatePost(post) {
+      dispatch(editPost(post));
     },
   };
 }

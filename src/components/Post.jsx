@@ -7,7 +7,9 @@ import TrashIcon from 'react-icons/lib/fa/trash';
 import { deletePost } from '../actions';
 import './Post.css';
 
-const { string, func, number } = PropTypes;
+const {
+  string, func, number, array,
+} = PropTypes;
 
 class Post extends Component {
   state = {};
@@ -17,7 +19,7 @@ class Post extends Component {
 
   render() {
     const {
-      id, timeStamp, title, author, voteScore, onEdit,
+      id, timeStamp, title, author, voteScore, onEdit, comments,
     } = this.props;
     return (
       <div>
@@ -38,8 +40,11 @@ class Post extends Component {
               <a href="#0" className="pl-2">
                 <TrashIcon onClick={e => this.onDelete(id)} />
               </a>
-              <span className="ml-3 badge badge-pill badge-secondary">
+              <span className="ml-3 badge badge-pill badge-info">
                 {`${voteScore} pts.`}
+              </span>
+              <span className="ml-3 badge badge-pill badge-info">
+                {`${comments.length} comments`}
               </span>
             </div>
           </div>
@@ -70,6 +75,7 @@ Post.propTypes = {
   timeStamp: number,
   title: string,
   author: string,
+  comments: array,
   voteScore: number,
   onDelete: func,
   onEdit: func,
@@ -83,6 +89,7 @@ Post.defaultProps = {
   title: '',
   author: '',
   voteScore: 0,
+  comments: [],
 };
 
 function mapDispatchToActions(dispatch) {

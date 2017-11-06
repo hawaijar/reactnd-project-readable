@@ -32,6 +32,7 @@ class SemanticForm extends Component {
       selectedCategory: 1,
       title: props.post.title,
       body: props.post.body.replace(/\n/g, ''),
+      author: props.post.author,
     };
   }
 
@@ -48,7 +49,7 @@ class SemanticForm extends Component {
         body: this.state.body,
         timestamp: new Date().getTime(),
         voteScore: 1,
-        author: 'Stan Lee',
+        author: this.state.author,
         comments: [],
         deleted: false,
         category: this.mapCategories[this.state.selectedCategory],
@@ -153,7 +154,14 @@ class SemanticForm extends Component {
                 cols="130"
               />
             </FormGroup>
-            <br />
+            <FieldGroup
+              id="formControlsText"
+              type="text"
+              label="Author"
+              placeholder="Enter author"
+              value={this.state.author}
+              onChange={e => this.handleInputChange(e, 'author')}
+            />
             <DropDownMenu
               disabled={this.props.category !== 'home'}
               value={this.state.selectedCategory}
