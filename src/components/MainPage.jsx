@@ -44,16 +44,18 @@ class MainPage extends Component {
       const category = categories[key - 2];
       return (
         <Tab eventKey={key} key={category} title={title}>
-          <Category category={category} categories={this.state.categories}/>
+          <Category category={category} categories={this.state.categories} />
         </Tab>
       );
     });
   };
   render() {
+    const activeCategory = this.props.match.params.category;
+    const activeKey = this.state.categories.indexOf(activeCategory) + 2;
     return (
       <div className="main">
         <FadeLoader color="#888" loading={this.state.loading} />
-        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+        <Tabs defaultActiveKey={activeKey || 1} id="uncontrolled-tab-example">
           <Tab eventKey={1} title="Home">
             <Category category="home" categories={this.state.categories} />
           </Tab>

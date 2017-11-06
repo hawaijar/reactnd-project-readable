@@ -7,16 +7,15 @@ import DetailedPage from './components/DetailedPage';
 
 import './App.css';
 
-const App = () => {
-  return (
+const App = () => (
     <div>
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route path="/post/:id" component={DetailedPage} />
+        <Route path="/:category" component={MainPage} />
         <Redirect to="/" />
       </Switch>
     </div>
   );
-};
 
 export default App;
