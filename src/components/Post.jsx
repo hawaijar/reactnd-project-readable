@@ -19,7 +19,7 @@ class Post extends Component {
 
   render() {
     const {
-      id, timeStamp, title, author, voteScore, onEdit, comments,
+      id, timeStamp, title, author, voteScore, onEdit, comments, category,
     } = this.props;
     return (
       <div>
@@ -28,7 +28,7 @@ class Post extends Component {
             <h3>
               <Link
                 className="text-muted"
-                to={{ pathname: `/post/${id}`, state: null }}
+                to={{ pathname: `/${category}/${id}`, state: null }}
               >
                 {title}
               </Link>
