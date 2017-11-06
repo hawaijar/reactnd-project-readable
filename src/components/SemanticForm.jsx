@@ -43,6 +43,9 @@ class SemanticForm extends Component {
       post.body = this.state.body;
       post.title = this.state.title;
     } else {
+      const { category } = this.props;
+      if (category.toLowerCase() === 'home') {
+      }
       post = {
         id: uuid(),
         title: this.state.title,
@@ -52,7 +55,7 @@ class SemanticForm extends Component {
         author: this.state.author,
         comments: [],
         deleted: false,
-        category: this.mapCategories[this.state.selectedCategory],
+        category: (category.toLowerCase() === 'home') ? this.mapCategories[this.state.selectedCategory]:category,
       };
     }
     if (this.props.isEdit) {
