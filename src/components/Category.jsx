@@ -73,7 +73,7 @@ class Category extends Component {
     return posts.map(post =>
       !post.deleted && (
       <li key={post.id} className="pb-2">
-        <Post {...post} onDelete={this.onDelete} onEdit={this.onEdit} />
+        <Post {...post} post={post} onDelete={this.onDelete} onEdit={this.onEdit} />
       </li>
       ));
   };

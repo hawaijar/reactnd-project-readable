@@ -36,6 +36,14 @@ class MainPage extends Component {
         this.setState({ loading: false });
       });
   }
+  onHandleChange = (index) => {
+    if (index >= 2) {
+      const selectedCategory = this.state.categories[index - 2];
+      this.props.history.push(`/${selectedCategory}`);
+    } else {
+      this.props.history.push('/');
+    }
+  }
   createTabs = (startIndex = 1) => {
     const { categories } = this.state;
     const keys = categories.map((category, index) => startIndex + index + 1);
@@ -55,7 +63,7 @@ class MainPage extends Component {
     return (
       <div className="main">
         <FadeLoader color="#888" loading={this.state.loading} />
-        <Tabs defaultActiveKey={activeKey || 1} id="uncontrolled-tab-example">
+        <Tabs onSelect={this.onHandleChange} defaultActiveKey={activeKey || 1} id="uncontrolled-tab-example">
           <Tab eventKey={1} title="Home">
             <Category category="home" categories={this.state.categories} />
           </Tab>

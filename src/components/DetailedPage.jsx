@@ -12,7 +12,7 @@ import user3Image from '../icons/user3.png';
 import user4Image from '../icons/user4.png';
 import user5Image from '../icons/user5.png';
 import user6Image from '../icons/user6.png';
-import { addComment, editPost } from '../actions';
+import { addComment, editPost, deletePost } from '../actions';
 import Comment from './Comment';
 import VoteUpIcon from 'react-icons/lib/md/arrow-drop-up';
 import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
@@ -104,6 +104,11 @@ class DetailedPage extends Component {
     });
   }
 
+  onDelete = (id) => {
+    this.props.removePost(id);
+    this.props.history.push('/');
+  };
+
   render() {
     const {
       title, author, body, comments, post,
@@ -126,6 +131,11 @@ class DetailedPage extends Component {
                 >
                   Edit
                 </Link>
+              </span>
+              <span>
+                <a href="#0" onClick={() => this.onDelete(postId)}>
+                  Delete
+                </a>
               </span>
 
               <span style={{
@@ -257,6 +267,9 @@ function mapDispatchToActions(dispatch) {
     },
     updatePost(post) {
       dispatch(editPost(post));
+    },
+    removePost(postId) {
+      dispatch(deletePost(postId));
     },
   };
 }
