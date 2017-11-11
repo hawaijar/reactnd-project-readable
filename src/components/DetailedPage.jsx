@@ -109,11 +109,24 @@ class DetailedPage extends Component {
     this.props.history.push('/');
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { id } = nextProps.post;
+    console.log(id);
+  }
+
   render() {
     const {
       title, author, body, comments, post,
     } = this.props;
     const postId = this.props.match.params.id;
+    if (this.props.post === null) {
+      return (
+        <div>
+          <h3>404 page not found</h3>
+          <p>We are sorry but the page you are looking for does not exist.</p>
+        </div>
+      );
+    }
     return (
       <div>
         <div>
@@ -252,6 +265,11 @@ DetailedPage.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   const post = find(state.home, { id: ownProps.match.params.id });
+  if (post === undefined || post.deleted === true) {
+    return {
+      post: null,
+    };
+  }
   const {
     title, author, body, comments, updateComment, voteScore,
   } = post;

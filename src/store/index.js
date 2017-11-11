@@ -1,19 +1,13 @@
-import { createStore, compose, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
+import { loadState, saveState } from '../localStorage';
 
-const store = createStore(
-	rootReducer,
-	compose(
-		applyMiddleware(thunk),
-		typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
-			? window.devToolsExtension()
-			: f => f
-	)
-);
-// store.subscribe(() => {
-// 	 eslint-disable no-console
-// 	console.log('1', store.getState());
-// });
+const persistedState = loadState();
+
+const store = createStore(rootReducer, persistedState);
+store.subscribe(() => {
+	saveState(store.getState());
+});
 
 export default store;

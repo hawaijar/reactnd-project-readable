@@ -43,7 +43,7 @@ class MainPage extends Component {
     } else {
       this.props.history.push('/');
     }
-  }
+  };
   createTabs = (startIndex = 1) => {
     const { categories } = this.state;
     const keys = categories.map((category, index) => startIndex + index + 1);
@@ -59,11 +59,27 @@ class MainPage extends Component {
   };
   render() {
     const activeCategory = this.props.match.params.category;
-    const activeKey = this.state.categories.indexOf(activeCategory) + 2;
+    const index = this.state.categories.indexOf(activeCategory);
+    let activeKey;
+    if (activeCategory && index !== -1) {
+      activeKey = this.state.categories.indexOf(activeCategory) + 2;
+    } else if (this.props.location.pathname !== '/') {
+      return (
+        <div>
+          <h3>404 page not found</h3>
+          <p>We are sorry but the page you are looking for does not exist.</p>
+        </div>
+      );
+    }
+
     return (
       <div className="main">
         <FadeLoader color="#888" loading={this.state.loading} />
-        <Tabs onSelect={this.onHandleChange} defaultActiveKey={activeKey || 1} id="uncontrolled-tab-example">
+        <Tabs
+          onSelect={this.onHandleChange}
+          defaultActiveKey={activeKey || 1}
+          id="uncontrolled-tab-example"
+        >
           <Tab eventKey={1} title="Home">
             <Category category="home" categories={this.state.categories} />
           </Tab>
