@@ -4,7 +4,7 @@ import orderBy from 'lodash/orderBy';
 import { ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, EDIT_POST, DELETE_POST, ADD_POST, SORT_POST } from '../actions';
 import data from './data';
 
-const home = (state = data, action) => {
+const home = (state = data.home, action) => {
   switch (action.type) {
     case ADD_COMMENT: {
       const { comment } = action.payload;

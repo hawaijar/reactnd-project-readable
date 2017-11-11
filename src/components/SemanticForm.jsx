@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import { MenuItem, DropDownMenu, TextField } from 'material-ui';
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  HelpBlock,
-} from 'react-bootstrap';
+import { MenuItem, DropDownMenu } from 'material-ui';
+import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import uuid from 'uuid/v1';
 import { string, arrayOf, shape, bool, func } from 'prop-types';
 
-function FieldGroup({
-  id, label, help, ...props
-}) {
+function FieldGroup({ id, label, help, ...props }) {
   return (
     <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
+      <ControlLabel>
+        {label}
+      </ControlLabel>
       <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
+      {help &&
+        <HelpBlock>
+          {help}
+        </HelpBlock>}
     </FormGroup>
   );
 }
@@ -32,11 +30,11 @@ class SemanticForm extends Component {
       selectedCategory: 1,
       title: props.post.title,
       body: props.post.body.replace(/\n/g, ''),
-      author: props.post.author,
+      author: props.post.author
     };
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     let post = this.props.post;
     if (this.props.isEdit) {
@@ -55,7 +53,7 @@ class SemanticForm extends Component {
         author: this.state.author,
         comments: [],
         deleted: false,
-        category: (category.toLowerCase() === 'home') ? this.mapCategories[this.state.selectedCategory]:category,
+        category: category.toLowerCase() === 'home' ? this.mapCategories[this.state.selectedCategory] : category
       };
     }
     if (this.props.isEdit) {
@@ -71,29 +69,14 @@ class SemanticForm extends Component {
       list = list.concat(categories);
       const items = list.map((menuItem, index) => {
         if (index === 0) {
-          return (
-            <MenuItem
-              key={menuItem}
-              disabled
-              value={index + 1}
-              primaryText={menuItem}
-            />
-          );
+          return <MenuItem key={menuItem} disabled value={index + 1} primaryText={menuItem} />;
         }
 
-        return (
-          <MenuItem key={menuItem} value={index + 1} primaryText={menuItem} />
-        );
+        return <MenuItem key={menuItem} value={index + 1} primaryText={menuItem} />;
       });
       return [...items];
     }
-    return (
-      <MenuItem
-        key={category}
-        value={1}
-        primaryText={`Category: ${category}`}
-      />
-    );
+    return <MenuItem key={category} value={1} primaryText={`Category: ${category}`} />;
   };
   handleSelectChange = (event, index, value) => {
     this.setState({ selectedCategory: value });
@@ -109,12 +92,12 @@ class SemanticForm extends Component {
 
     const styles = {
       container: {
-        marginTop: '-1em',
+        marginTop: '-1em'
       },
       customWidth: {
         width: 200,
-        marginLeft: '-24px',
-      },
+        marginLeft: '-24px'
+      }
     };
 
     return (
@@ -176,23 +159,11 @@ class SemanticForm extends Component {
               {this.getMenuItems()}
             </DropDownMenu>
             <div className="container">
-              <div
-                className="btn-group row justify-content-center"
-                role="group"
-                aria-label="Basic example"
-              >
-                <button
-                  onClick={this.onSubmit}
-                  type="button"
-                  className="btn btn-primary p-3"
-                >
+              <div className="btn-group row justify-content-center" role="group" aria-label="Basic example">
+                <button onClick={this.onSubmit} type="button" className="btn btn-primary p-3">
                   Submit
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={this.props.onModalClose}
-                >
+                <button type="button" className="btn btn-secondary" onClick={this.props.onModalClose}>
                   Cancel
                 </button>
               </div>
@@ -209,11 +180,11 @@ SemanticForm.propTypes = {
   categories: arrayOf(string),
   post: shape({
     title: string,
-    body: string,
+    body: string
   }),
   isEdit: bool,
   onEditSubmit: func,
-  onAdd: func,
+  onAdd: func
 };
 SemanticForm.defaultProps = {
   category: 'home',
@@ -221,7 +192,7 @@ SemanticForm.defaultProps = {
   post: { title: '', body: '' },
   isEdit: false,
   onEditSubmit: f => f,
-  onAdd: f => f,
+  onAdd: f => f
 };
 
 export default SemanticForm;

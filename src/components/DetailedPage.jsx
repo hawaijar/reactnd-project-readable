@@ -19,38 +19,36 @@ import VoteDownIcon from 'react-icons/lib/md/arrow-drop-down';
 import '../App.css';
 import './DetailedPage.css';
 
-const {
-  string, arrayOf, func, any,
-} = PropTypes;
+const { string, arrayOf, func, any } = PropTypes;
 
 class DetailedPage extends Component {
   state = {
     users: {
       1: {
         name: 'Shelley',
-        avatar: user1Image,
+        avatar: user1Image
       },
       2: {
         name: 'Marc',
-        avatar: user2Image,
+        avatar: user2Image
       },
       3: {
         name: 'Mike',
-        avatar: user3Image,
+        avatar: user3Image
       },
       4: {
         name: 'Kyle',
-        avatar: user4Image,
+        avatar: user4Image
       },
       5: {
         name: 'Bob',
-        avatar: user5Image,
+        avatar: user5Image
       },
       6: {
         name: 'Jane',
-        avatar: user6Image,
-      },
-    },
+        avatar: user6Image
+      }
+    }
   };
   onEdit = () => {
     const body = this.postText.value;
@@ -73,7 +71,7 @@ class DetailedPage extends Component {
     const comment = {};
     comment.body = this.textInput.value;
     comment.timestamp = Date.now();
-    const randomId = Math.floor((Math.random() * 6) + 1);
+    const randomId = Math.floor(Math.random() * 6 + 1);
     const randomUser = this.state.users[randomId];
     comment.id = new Date().getTime().toString();
     comment.author = randomUser.name;
@@ -86,13 +84,13 @@ class DetailedPage extends Component {
     this.textInput.value = '';
   };
 
-  displayComments = (comments) => {
+  displayComments = comments => {
     if (comments.length === 0) {
       return null;
     }
     const sortBy = 'voteScore';
     const sortedCommentsByVote = orderBy(comments, [`${sortBy}`], ['desc']);
-    return sortedCommentsByVote.map((comment) => {
+    return sortedCommentsByVote.map(comment => {
       if (!comment.deleted) {
         return (
           <li className="comment" key={comment.id}>
@@ -102,9 +100,9 @@ class DetailedPage extends Component {
       }
       return null;
     });
-  }
+  };
 
-  onDelete = (id) => {
+  onDelete = id => {
     this.props.removePost(id);
     this.props.history.push('/');
   };
@@ -113,17 +111,23 @@ class DetailedPage extends Component {
     const { id } = nextProps.post;
     console.log(id);
   }
+  refresh = e => {
+    e.preventDefault();
+    this.props.history.push('/');
+    window.location.reload();
+  };
 
   render() {
-    const {
-      title, author, body, comments, post,
-    } = this.props;
+    const { title, author, body, comments, post } = this.props;
     const postId = this.props.match.params.id;
     if (this.props.post === null) {
       return (
         <div>
           <h3>404 page not found</h3>
           <p>We are sorry but the page you are looking for does not exist.</p>
+          <a href="#0" onClick={this.refresh}>
+            Click Home
+          </a>
         </div>
       );
     }
@@ -139,11 +143,7 @@ class DetailedPage extends Component {
             <h1>
               {title}
               <span>
-                <Link
-                  to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}
-                >
-                  Edit
-                </Link>
+                <Link to={{ pathname: `/post/${postId}`, state: { isEdit: true } }}>Edit</Link>
               </span>
               <span>
                 <a href="#0" onClick={() => this.onDelete(postId)}>
@@ -151,57 +151,48 @@ class DetailedPage extends Component {
                 </a>
               </span>
 
-              <span style={{
-                padding: '0', cursor: 'initial', color: 'initial',
-              }}
+              <span
+                style={{
+                  padding: '0',
+                  cursor: 'initial',
+                  color: 'initial'
+                }}
               >
-                <VoteUpIcon
-                  onClick={this.upVote}
-                  width={50}
-                  height={50}
-                  style={{ cursor: 'pointer' }}
-                />
+                <VoteUpIcon onClick={this.upVote} width={50} height={50} style={{ cursor: 'pointer' }} />
                 <div style={{ display: 'inline-flex', flexDirection: 'column', textAlign: 'center' }}>
                   <div>{`${post.voteScore}`}</div>
                   <div>votes</div>
                 </div>
-                <VoteDownIcon
-                  onClick={this.downVote}
-                  width={50}
-                  height={50}
-                  style={{ cursor: 'pointer' }}
-                />
+                <VoteDownIcon onClick={this.downVote} width={50} height={50} style={{ cursor: 'pointer' }} />
               </span>
             </h1>
-            <p className="posted-by">Posted by {author}</p>
+            <p className="posted-by">
+              Posted by {author}
+            </p>
             {!this.props.location.state && body}
-            {this.props.location.state && (
+            {this.props.location.state &&
               <div className="edit-post">
                 <div className="first-box">
                   <textarea
                     name="comment"
-                    ref={(input) => { this.postText = input; }}
+                    ref={input => {
+                      this.postText = input;
+                    }}
                     autoFocus
                     defaultValue={body}
                   />
                 </div>
                 <div className="second-box">
                   <span>
-                    <Link
-                      onClick={() => this.onEdit()}
-                      to={{ pathname: `/post/${postId}`, state: null }}
-                    >
+                    <Link onClick={() => this.onEdit()} to={{ pathname: `/post/${postId}`, state: null }}>
                       Save
                     </Link>
                   </span>
                   <span>
-                    <Link to={{ pathname: `/post/${postId}`, state: null }}>
-                      Cancel
-                    </Link>
+                    <Link to={{ pathname: `/post/${postId}`, state: null }}>Cancel</Link>
                   </span>
                 </div>
-              </div>
-            )}
+              </div>}
           </article>
           <hr />
           <section className="commentContainer">
@@ -209,7 +200,7 @@ class DetailedPage extends Component {
               style={{
                 marginBottom: '.35em',
                 fontSize: '1em',
-                color: '#666',
+                color: '#666'
               }}
             >
               {`${comments.length} Comments`}
@@ -227,7 +218,7 @@ class DetailedPage extends Component {
                 <textarea
                   placeholder="Add your comment here"
                   name="comment"
-                  ref={(input) => {
+                  ref={input => {
                     this.textInput = input;
                   }}
                 />
@@ -250,7 +241,7 @@ DetailedPage.propTypes = {
   comments: arrayOf(string),
   updatePost: func,
   pushComment: func,
-  post: any,
+  post: any
 };
 
 DetailedPage.defaultProps = {
@@ -260,21 +251,25 @@ DetailedPage.defaultProps = {
   comments: [],
   updatePost: f => f,
   pushComment: f => f,
-  post: null,
+  post: null
 };
 
 function mapStateToProps(state, ownProps) {
   const post = find(state.home, { id: ownProps.match.params.id });
   if (post === undefined || post.deleted === true) {
     return {
-      post: null,
+      post: null
     };
   }
-  const {
-    title, author, body, comments, updateComment, voteScore,
-  } = post;
+  const { title, author, body, comments, updateComment, voteScore } = post;
   return {
-    title, author, body, comments, updateComment, post, voteScore,
+    title,
+    author,
+    body,
+    comments,
+    updateComment,
+    post,
+    voteScore
   };
 }
 
@@ -288,7 +283,7 @@ function mapDispatchToActions(dispatch) {
     },
     removePost(postId) {
       dispatch(deletePost(postId));
-    },
+    }
   };
 }
 
